@@ -1,0 +1,158 @@
+<!doctype html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>jeu-fourni/docs/INTERFACE.md</title><style>body{margin:0;padding:20px;font-family:Aptos,Arial,sans-serif;color:#172033;line-height:1.6;overflow-wrap:anywhere}main{max-width:960px;margin:auto}h1{font-size:1.8rem}h2{font-size:1.4rem;border-bottom:2px solid #2F9E99;padding-bottom:.35rem;margin-top:2rem}h3{font-size:1.1rem}a{color:#176f70}pre{overflow:auto;padding:1rem;background:#223451;color:white}pre code{white-space:pre}code{font-family:Consolas,monospace}table{border-collapse:collapse;width:100%;min-width:560px}th,td{padding:.6rem;border:1px solid #ddd;text-align:left;vertical-align:top}th{background:#223451;color:white}.table{overflow-x:auto}.note{background:#eaf5f4;border-left:4px solid #2F9E99;padding:1rem}</style></head><body><main><h1>Lire une observation et reprendre une commande</h1>
+<p>Les deux clients appliquent <code>esc-api-v1</code> et les règles <code>esc-blackjack-a26-v1</code>. Le moteur est la source des règles; le transport ne choisit aucune action. Les identifiants sont opaques.</p>
+<h2>1. Appeler les cinq opérations</h2>
+<div class="table"><table>
+<thead>
+<tr>
+<th>Méthode commune</th>
+<th>Route distante</th>
+<th>Résultat</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>create_session(config_ref, model_ref, request_id)</code></td>
+<td><code>POST /api/v1/sessions</code></td>
+<td>Réserve 1 000, état <code>ready</code>, révision 0; HTTP 201.</td>
+</tr>
+<tr>
+<td><code>observe(session_id)</code></td>
+<td><code>GET /api/v1/sessions/{id}</code></td>
+<td>Observation courante; HTTP 200.</td>
+</tr>
+<tr>
+<td><code>start_hand(session_id, expected_revision, request_id)</code></td>
+<td><code>POST /api/v1/sessions/{id}/hands</code></td>
+<td>Distribution explicite, parfois règlement immédiat; HTTP 200.</td>
+</tr>
+<tr>
+<td><code>act(session_id, action, expected_revision, request_id)</code></td>
+<td><code>POST /api/v1/sessions/{id}/actions</code></td>
+<td><code>hit</code> ou <code>hold</code> en décision; HTTP 200.</td>
+</tr>
+<tr>
+<td><code>close_session(session_id, expected_revision, request_id)</code></td>
+<td><code>POST /api/v1/sessions/{id}/close</code></td>
+<td>Interruption confirmée, ou observation finale déjà obtenue; HTTP 200.</td>
+</tr>
+</tbody></table></div>
+<p>Les clients ajoutent <code>protocol_version</code> aux commandes JSON. Les noms <code>config_ref</code> et <code>model_ref</code> sont des références déclaratives de 1 à 128 caractères; ils ne modifient pas les règles ou les bornes du serveur. Un <code>request_id</code> contient de 1 à 128 lettres ASCII, chiffres, tirets ou soulignements. Il est unique parmi toutes les mutations de l&#39;identité, y compris la création. Chaque révision attendue est un entier positif ou nul; les booléens et chaînes numériques sont refusés.</p>
+<p>Champs inconnus, actions autres que <code>hit</code>/<code>hold</code>, montants, graines et données de paquet sont refusés. Un accès distant utilise <code>Authorization: Bearer ...</code>. Une séance inconnue et une séance appartenant à une autre identité donnent toutes deux 404.</p>
+<h2>2. Lire les champs publics</h2>
+<div class="table"><table>
+<thead>
+<tr>
+<th>Champs</th>
+<th>Lecture</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>protocol_version</code>, <code>ruleset_id</code></td>
+<td>Versions du contrat et des règles.</td>
+</tr>
+<tr>
+<td><code>session_id</code>, <code>hand_id</code>, <code>revision</code></td>
+<td>Séance, main et révision courantes; la main est nulle avant distribution.</td>
+</tr>
+<tr>
+<td><code>session_status</code>, <code>end_reason</code>, <code>hand_status</code></td>
+<td>Séance active/finale, raison éventuelle, main <code>ready</code>, <code>decision</code> ou <code>hand_over</code>.</td>
+</tr>
+<tr>
+<td><code>bankroll</code>, <code>bankroll_before_hand</code>, <code>bet_pending</code></td>
+<td>Réserve disponible, réserve avant main et mise encore en attente.</td>
+</tr>
+<tr>
+<td><code>player_cards</code>, <code>player_total</code>, <code>player_usable_ace</code></td>
+<td>Cartes du joueur, total et présence d&#39;un as utilisable à 11.</td>
+</tr>
+<tr>
+<td><code>dealer_upcard</code>, <code>dealer_cards</code>, <code>dealer_total</code></td>
+<td>Avant règlement : une seule carte visible, total nul. Après règlement normal : cartes complètes et total.</td>
+</tr>
+<tr>
+<td><code>legal_actions</code></td>
+<td><code>[&#39;hit&#39;,&#39;hold&#39;]</code> en décision active, liste vide autrement.</td>
+</tr>
+<tr>
+<td><code>shoe_id</code>, <code>shoe_reset</code>, <code>visible_events</code></td>
+<td>Génération du paquet et cartes devenues visibles dans la dernière transition.</td>
+</tr>
+<tr>
+<td><code>result</code></td>
+<td>Nul avant règlement; sinon résultat détaillé de la main.</td>
+</tr>
+<tr>
+<td><code>limits</code></td>
+<td>Bornes de mains, temps, inactivité et rétention, échéance effective et compteur de mains réglées.</td>
+</tr>
+</tbody></table></div>
+<p>Les cartes sont des objets <code>{rank, suit}</code>. Rangs : <code>2</code> à <code>10</code>, <code>J</code>, <code>Q</code>, <code>K</code>, <code>A</code>; couleurs : <code>clubs</code>, <code>diamonds</code>, <code>hearts</code>, <code>spades</code>. Les cartes invisibles n&#39;ont aucun objet de remplacement contenant leur valeur.</p>
+<p>Chaque événement contient exactement <code>event_id</code>, <code>shoe_id</code>, <code>hand_id</code>, <code>owner</code> et <code>card</code>. Les identifiants d&#39;événement sont des chaînes uniques dans la séance; ils n&#39;ont pas de trou causé par une carte cachée. À la distribution : joueur, croupier visible, joueur. À la résolution : carte cachée puis tirages éventuels du croupier. Un tirage joueur précède ces révélations. <code>GET</code> restitue les événements de la dernière transition; les relire ne signifie pas qu&#39;ils se sont produits de nouveau.</p>
+<p>Un résultat contient <code>outcome</code> (<code>win</code>, <code>tie</code>, <code>loss</code>), <code>reason</code>, <code>stake</code>, <code>credit</code>, <code>net_gain</code>, <code>bankroll_before</code>, <code>bankroll_after</code>. Les raisons sont <code>player_natural</code>, <code>dealer_natural</code>, <code>both_natural</code>, <code>player_bust</code>, <code>dealer_bust</code>, <code>higher_total</code>, <code>lower_total</code>, <code>equal_total</code>.</p>
+<p><code>limits</code> contient <code>max_hands</code>, <code>max_seconds</code>, <code>idle_seconds</code>, <code>retention_seconds</code>, <code>expires_at</code> (secondes Unix) et <code>hands_settled</code>. L&#39;inactivité est mesurée depuis la dernière mutation acceptée; une lecture ou une répétition ne prolonge pas une séance. Une lecture peut constater et enregistrer l&#39;expiration effective. Les heures et durées ne sont pas des entrées du modèle initial.</p>
+<h2>3. Reprendre sans doubler la mise</h2>
+<p>Une commande acceptée augmente la révision une fois. Une répétition avec le même identifiant et le même contenu renvoie la réponse initiale, même si la révision a changé depuis. Un contenu différent sous le même identifiant provoque un conflit. Deux commandes différentes visant la même révision ne peuvent pas toutes deux être appliquées.</p>
+<p>Après un délai dépassé, conserver la commande, sa révision et son <code>request_id</code>. Le client HTTPS réessaie cette commande à l&#39;identique, au plus selon <code>max_attempts</code>. Il n&#39;envoie aucune nouvelle mutation tant qu&#39;une commande reste incertaine. <code>retry_pending()</code> la reprend; <code>observe(session_id)</code> permet d&#39;examiner l&#39;état sans modifier cette commande en attente. Une réponse 429 ou 503 reste susceptible de reprise. Les reprises automatiques de 429 respectent <code>Retry-After</code> si celui-ci ne dépasse pas deux secondes; au-delà, l&#39;erreur revient à l&#39;appelant pour une attente explicite. Le délai réseau n&#39;est pas une preuve d&#39;absence d&#39;application.</p>
+<p>La période de reprise finit <code>retention_seconds</code> après la fin effective de la séance. À l&#39;accès suivant cette période, les états/cartes et réponses conservées sont purgés; une trace minimale identité–identifiant empêche de recréer une ancienne séance et provoque 410. L&#39;application de transport préparée ici n&#39;effectue pas de purge périodique en arrière-plan. Une interruption ou expiration conserve les seules mains réellement réglées.</p>
+<p>Une nouvelle exécution du client doit restaurer ses identifiants, sa commande incertaine et son journal avant de reprendre. L&#39;exemple ponctuel <code>cycle_commandes.py</code> s&#39;arrête sur une incertitude; il ne constitue pas une reprise durable entre processus.</p>
+<h2>4. Interpréter les erreurs</h2>
+<div class="table"><table>
+<thead>
+<tr>
+<th>Code HTTP / code métier</th>
+<th>Réaction</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>400 <code>invalid_request</code></td>
+<td>Corriger le JSON mal formé, les clés en double ou nombres non finis.</td>
+</tr>
+<tr>
+<td>401 <code>unauthenticated</code></td>
+<td>Rétablir l&#39;accès; aucune création implicite.</td>
+</tr>
+<tr>
+<td>404 <code>session_not_found</code></td>
+<td>Vérifier l&#39;identifiant et l&#39;identité.</td>
+</tr>
+<tr>
+<td>409 <code>revision_conflict</code>, <code>invalid_transition</code>, <code>idempotency_conflict</code></td>
+<td>Relire et vérifier la commande; ne pas changer arbitrairement l&#39;identifiant d&#39;une commande incertaine.</td>
+</tr>
+<tr>
+<td>410 <code>session_gone</code></td>
+<td>Période de reprise terminée; ne pas recréer silencieusement le même essai.</td>
+</tr>
+<tr>
+<td>422 <code>invalid_payload</code>, <code>unsupported_version</code></td>
+<td>Corriger champs/types/valeurs/version.</td>
+</tr>
+<tr>
+<td>429 <code>rate_limited</code></td>
+<td>Respecter <code>Retry-After</code>; reprendre la même commande.</td>
+</tr>
+<tr>
+<td>503 <code>service_unavailable</code></td>
+<td>Reprendre la même commande ou lire l&#39;état; aucune nouvelle main supposée.</td>
+</tr>
+</tbody></table></div>
+<p>Une erreur métier locale lève <code>GameError</code> avec les mêmes codes applicables. Le corps distant est <code>{error:{code,message,request_id},revision}</code>. La révision est nulle si la séance n&#39;est pas accessible. Les messages ne contiennent ni carte cachée, ni jeton, ni trace interne. Une échéance effective peut finaliser la séance avant l&#39;action demandée; sa réponse porte la raison réelle, sans défaite inventée.</p>
+<h2>5. Références techniques</h2>
+<div class="table"><table>
+<thead>
+<tr>
+<th>Source</th>
+<th>Contribution</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><a href="https://docs.python.org/3.13/library/urllib.request.html">Python : urllib.request</a></td>
+<td>Transport HTTP(S) de bibliothèque standard.</td>
+</tr>
+<tr>
+<td><a href="https://docs.python.org/3.13/library/ssl.html">Python : ssl</a></td>
+<td>Contexte TLS et vérification des certificats.</td>
+</tr>
+</tbody></table></div>
+<p>Le source installé n&#39;exporte pas de fixture, de fonction de débogage ou d&#39;accès public au paquet. Les champs privés, les erreurs internes et l&#39;état d&#39;autres identités ne font pas partie du contrat de jeu.</p>
+</main></body></html>

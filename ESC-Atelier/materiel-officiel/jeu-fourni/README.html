@@ -1,0 +1,46 @@
+<!doctype html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>jeu-fourni/README.md</title><style>body{margin:0;padding:20px;font-family:Aptos,Arial,sans-serif;color:#172033;line-height:1.6;overflow-wrap:anywhere}main{max-width:960px;margin:auto}h1{font-size:1.8rem}h2{font-size:1.4rem;border-bottom:2px solid #2F9E99;padding-bottom:.35rem;margin-top:2rem}h3{font-size:1.1rem}a{color:#176f70}pre{overflow:auto;padding:1rem;background:#223451;color:white}pre code{white-space:pre}code{font-family:Consolas,monospace}table{border-collapse:collapse;width:100%;min-width:560px}th,td{padding:.6rem;border:1px solid #ddd;text-align:left;vertical-align:top}th{background:#223451;color:white}.table{overflow-x:auto}.note{background:#eaf5f4;border-left:4px solid #2F9E99;padding:1rem}</style></head><body><main><h1>Utiliser le jeu Blackjack fourni</h1>
+<p>Le moteur calcule les cartes, les règles, les actions légales et les résultats. La même interface permet les appels locaux directs et les échanges HTTPS. La représentation d&#39;un agent, ses décisions, son apprentissage, ses récompenses et ses expériences restent à construire séparément.</p>
+<h2>1. Préparer Python</h2>
+<p>Cible : <strong>CPython 3.13</strong>, correctif de référence <strong>3.13.16</strong>, Windows x64. Les tests locaux ont aussi été exécutés sur 3.13.14. L&#39;installation sur les postes institutionnels reste à vérifier. Le jeu et le client HTTPS utilisent uniquement la bibliothèque standard; aucune bibliothèque d&#39;apprentissage n&#39;est requise par le jeu.</p>
+<p>Les commandes suivantes s&#39;exécutent depuis le dossier <code>jeu-fourni</code>. Avec le lanceur Python Windows :</p>
+<pre><code class="language-powershell">py -3.13 -c &quot;import sys; print(sys.version); print(sys.executable)&quot;
+$env:PYTHONPATH = Join-Path (Get-Location) &#39;src&#39;
+py -3.13 -m unittest discover -s tests -v
+py -3.13 examples/cycle_commandes.py --max-hands 1 --max-seconds 60 --idle-seconds 30 --retention-seconds 60 --actions hold
+</code></pre>
+<p>La dernière commande impose une seule action à une seule main. Elle vérifie le branchement et affiche une observation JSON; elle ne constitue pas une stratégie de référence. Un naturel peut terminer la main dès sa distribution. Les petites bornes de cet exemple servent à la vérification, sans fixer un protocole d&#39;expérimentation.</p>
+<p>Si <code>py</code> est absent, utiliser le chemin complet de Python 3.13 avec l&#39;opérateur PowerShell <code>&amp;</code>. La commande <code>python</code> peut désigner une autre version : vérifier réellement sa sortie.</p>
+<p>Une installation du paquet dans un environnement existant est également possible :</p>
+<pre><code class="language-powershell">py -3.13 -m pip install .
+</code></pre>
+<p>La construction utilise <code>setuptools==84.0.0</code>, indiqué dans <code>pyproject.toml</code>. Après installation, <code>from blackjack import LocalClient, Limits</code> fonctionne sans définir <code>PYTHONPATH</code>. Les fichiers source, les tests et la documentation restent consultables dans ce dossier.</p>
+<h2>2. Appeler le moteur local</h2>
+<pre><code class="language-python">from blackjack import Limits, LocalClient
+
+# Bornes explicites d&#39;une vérification ponctuelle.
+client = LocalClient(Limits(max_hands=1, max_seconds=60,
+                           idle_seconds=30, retention_seconds=60))
+observation = client.create_session(&quot;verification&quot;, &quot;commandes-imposees&quot;, &quot;creation-1&quot;)
+observation = client.start_hand(observation[&quot;session_id&quot;],
+                                observation[&quot;revision&quot;], &quot;distribution-1&quot;)
+</code></pre>
+<p>Une décision n&#39;est permise que si <code>legal_actions</code> contient <code>hit</code> et <code>hold</code>. <code>act(session_id, action, expected_revision, request_id)</code> applique une action choisie par l&#39;appelant. <code>observe(session_id)</code> permet de relire l&#39;état et <code>close_session(session_id, expected_revision, request_id)</code> confirme une interruption. Chaque nouvelle commande reçoit un identifiant inédit; une reprise conserve l&#39;identifiant et le contenu exacts de la commande incertaine.</p>
+<p>Les bornes locales sont obligatoires. Une graine facultative <code>LocalClient(limits, seed=...)</code> permet de reproduire un essai local; elle n&#39;entre jamais dans l&#39;observation ou dans les entrées d&#39;un agent. Le mode local n&#39;ouvre ni réseau, ni base de données et n&#39;exige aucun service actif.</p>
+<h2>3. Utiliser le même contrat en HTTPS</h2>
+<pre><code class="language-python">import os
+from blackjack.client_https import HTTPSClient
+
+client = HTTPSClient(&quot;https://hote-fourni-par-le-professeur.example&quot;,
+                     os.environ[&quot;BLACKJACK_TOKEN&quot;])
+</code></pre>
+<p>Le nom d&#39;hôte ci-dessus est un exemple à remplacer par l&#39;adresse effectivement fournie. Les cinq méthodes de jeu sont les mêmes qu&#39;en mode local. Le serveur fixe les bornes; aucune mise, graine ou séquence de cartes ne peut être envoyée. Le jeton reste hors du code, de l&#39;URL et des journaux. Le client vérifie les certificats TLS et refuse les redirections. Le service commun et son accès seront fournis séparément; les tests HTTP locaux ne prouvent pas leur disponibilité.</p>
+<p>La commande manuelle accepte aussi <code>--url</code> et lit <code>BLACKJACK_TOKEN</code>. Le délai du transport est de 5 secondes par tentative et le maximum est de 2 tentatives par appel, configurables dans <code>HTTPSClient</code>. Une réponse perdue exige une reprise de la même commande; les détails sont dans <a href="docs/INTERFACE.html">l&#39;interface</a>.</p>
+<h2>4. Consulter les responsabilités et les règles</h2>
+<ul>
+<li><a href="docs/REGLES.html">Règles et comptabilité</a> : mains, séances, réserve, renouvellement et interruptions.</li>
+<li><a href="docs/INTERFACE.html">Interface et reprise</a> : champs autorisés, commandes, erreurs et idempotence.</li>
+<li><code>tests/test_engine.py</code> : vérifications du moteur fourni; les fixtures sont dans le harnais de tests et ne sont pas des entrées distantes.</li>
+<li><code>examples/cycle_commandes.py</code> : petit client de commandes imposées, utilisable dans les deux modes.</li>
+</ul>
+<p>Le code source permet de comprendre le moteur. Les cartes restantes, la carte cachée, l&#39;état aléatoire et les champs privés ne sont jamais des entrées autorisées pour un agent. Les tests de l&#39;agent et la vérification de ses propres calculs et choix demeurent distincts des tests du jeu fourni.</p>
+</main></body></html>

@@ -1,0 +1,52 @@
+<!doctype html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>jeu-fourni/docs/REGLES.md</title><style>body{margin:0;padding:20px;font-family:Aptos,Arial,sans-serif;color:#172033;line-height:1.6;overflow-wrap:anywhere}main{max-width:960px;margin:auto}h1{font-size:1.8rem}h2{font-size:1.4rem;border-bottom:2px solid #2F9E99;padding-bottom:.35rem;margin-top:2rem}h3{font-size:1.1rem}a{color:#176f70}pre{overflow:auto;padding:1rem;background:#223451;color:white}pre code{white-space:pre}code{font-family:Consolas,monospace}table{border-collapse:collapse;width:100%;min-width:560px}th,td{padding:.6rem;border:1px solid #ddd;text-align:left;vertical-align:top}th{background:#223451;color:white}.table{overflow-x:auto}.note{background:#eaf5f4;border-left:4px solid #2F9E99;padding:1rem}</style></head><body><main><h1>Comprendre les mains et les séances</h1>
+<p>Le jeu utilise des unités fictives. Une <strong>main</strong> se termine par une victoire, un nul ou une défaite. Une <strong>séance</strong> contient plusieurs mains et commence avec une réserve de 1 000. Son objectif est d&#39;atteindre au moins 2 000; une réserve inférieure à 50 constitue la ruine.</p>
+<h2>1. Distribuer et prendre une décision</h2>
+<p>Le paquet comporte 52 cartes distinctes, sans remise. L&#39;ordre de distribution est : première carte du joueur, carte visible du croupier, deuxième carte du joueur, carte cachée du croupier. La mise fixe de 50 est débitée une seule fois.</p>
+<p>Les figures valent 10. Un as vaut 1 ou 11 : le moteur choisit le meilleur total sans dépasser 21 lorsque cela est possible. <code>player_usable_ace</code> indique qu&#39;un as vaut actuellement 11. Par exemple, as–as vaut 12; as–6 vaut 17; as–6–10 vaut 17 avec les as à 1.</p>
+<p>Deux actions sont possibles pendant une décision :</p>
+<ul>
+<li><code>hit</code> ajoute une carte au joueur. Au-dessus de 21, la main est perdue. À exactement 21, le moteur résout automatiquement la main.</li>
+<li><code>hold</code> termine les tirages du joueur et fait jouer le croupier.</li>
+</ul>
+<p>Le croupier tire sous 17 et reste sur tout 17, même avec un as valant 11. Il continue sous 17 même s&#39;il dépasse déjà le total du joueur. Après un dépassement du joueur, aucun tirage supplémentaire du croupier n&#39;est effectué.</p>
+<h2>2. Résoudre et créditer la réserve</h2>
+<p>Un naturel est un total de 21 obtenu avec les deux cartes initiales. Il est résolu immédiatement, sans décision : deux naturels font nul; un seul naturel gagne. Un 21 obtenu par tirage ne devient pas un naturel.</p>
+<p>Sinon, le dépassement du joueur fait perdre; celui du croupier fait gagner. Sans dépassement, le total le plus élevé gagne et les totaux égaux font nul. À toute fin normale, les cartes distribuées du croupier sont révélées, même après le dépassement du joueur.</p>
+<div class="table"><table>
+<thead>
+<tr>
+<th>Résultat</th>
+<th>Crédit après le débit de 50</th>
+<th>Gain net</th>
+<th>Réserve finale si la réserve initiale était 1 000</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Victoire, y compris un naturel</td>
+<td>100</td>
+<td>+50</td>
+<td>1 050</td>
+</tr>
+<tr>
+<td>Nul</td>
+<td>50</td>
+<td>0</td>
+<td>1 000</td>
+</tr>
+<tr>
+<td>Défaite</td>
+<td>0</td>
+<td>−50</td>
+<td>950</td>
+</tr>
+</tbody></table></div>
+<p>Le moteur fournit ces faits de jeu. Il ne les transforme pas en récompenses d&#39;apprentissage. Le choix des valeurs et de leur attribution appartient au travail d&#39;agent.</p>
+<p>Le résultat reste associé à son <code>hand_id</code>. Une nouvelle main nécessite toujours une commande <code>start_hand</code>; aucune distribution ne suit automatiquement un règlement.</p>
+<h2>3. Renouveler le paquet</h2>
+<p>Un paquet neuf est mélangé avant la première main. Ensuite, il est renouvelé avant une main seulement s&#39;il reste moins de 18 cartes. À exactement 18, il est conservé. Il n&#39;est jamais renouvelé pendant une main.</p>
+<p>Le changement de <code>shoe_id</code> indique le renouvellement. <code>shoe_reset</code> vaut vrai dans la réponse de la commande qui a créé le paquet; une lecture ne crée pas un nouveau renouvellement. Les événements visibles permettent de suivre uniquement les cartes réellement révélées. La mémoire facultative des cartes doit dédupliquer leurs <code>event_id</code> et se vider lorsque <code>shoe_id</code> change.</p>
+<h2>4. Distinguer une fin de jeu d&#39;une interruption</h2>
+<p>Après règlement, l&#39;objectif et la ruine priment sur la borne de mains. Sinon, cette borne termine la séance avec <code>truncated</code> et <code>hand_limit</code>. Les bornes effectives figurent dans <code>limits</code> dès la création.</p>
+<p>Une limite de temps donne <code>truncated/time_limit</code>; une expiration d&#39;inactivité donne <code>expired/idle_timeout</code>; une fermeture explicite donne <code>interrupted/explicit_close</code>. Ces états ne sont pas des défaites. En cas de main inachevée, <code>result</code> reste nul, <code>bet_pending</code> reste à 50 et <code>bankroll_before_hand</code> conserve la réserve avant son débit. La réserve disponible provisoire ne doit pas être interprétée comme une ruine.</p>
+<p>Une perte de connexion seule ne clôt pas la séance. Une reprise avant expiration retrouve l&#39;état exact. Après expiration, la main inachevée n&#39;est ni réglée ni ajoutée au compteur des mains terminées. La carte cachée n&#39;est pas révélée par une interruption.</p>
+</main></body></html>

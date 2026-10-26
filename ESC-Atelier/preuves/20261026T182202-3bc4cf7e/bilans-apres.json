@@ -1,0 +1,40 @@
+{
+  "bilans": [
+    {
+      "etat": [
+        12,
+        10
+      ],
+      "action": "hit",
+      "N": 1,
+      "S": -1,
+      "Q": -1.0
+    },
+    {
+      "etat": [
+        13,
+        10
+      ],
+      "action": "hit",
+      "N": 1,
+      "S": -1,
+      "Q": -1.0
+    },
+    {
+      "etat": [
+        18,
+        10
+      ],
+      "action": "hold",
+      "N": 1,
+      "S": -1,
+      "Q": -1.0
+    }
+  ],
+  "mains_attribuees": [
+    [
+      "7c39d174ddb64df1b7e011685cd4dade",
+      "d9eb1702a47e48e6af585aeed9c8b141"
+    ]
+  ]
+}

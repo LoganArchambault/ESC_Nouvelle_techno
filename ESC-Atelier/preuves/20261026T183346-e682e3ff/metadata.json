@@ -1,0 +1,58 @@
+{
+  "version": "atelier08-v1",
+  "date_utc": "2026-10-26T18:33:46.737825+00:00",
+  "commande_argv": [
+    "C:\\Users\\6311993\\AppData\\Local\\Programs\\Python\\Python313\\python.exe",
+    "lancer.py",
+    "--politique",
+    "fixed17",
+    "--max-hands",
+    "5",
+    "--max-seconds",
+    "60",
+    "--idle-seconds",
+    "30",
+    "--retention-seconds",
+    "60"
+  ],
+  "repertoire": "C:\\Users\\6311993\\Downloads\\ESC-Atelier-Fixed17-NSQ\\ESC-Atelier",
+  "python": "3.13.15 (tags/v3.13.15:4061bc4, Aug  5 2026, 13:05:39) [MSC v.1944 64 bit (AMD64)]",
+  "implementation": "CPython",
+  "cible_cpython313_validee": true,
+  "sha256_sources": {
+    "atelier\\__init__.py": "98459a597a8a484c490c62a39f8eef8960d13b7e1f2bdc23df54999e2225b097",
+    "atelier\\joueur.py": "85981b1fa19909e39f36367501da6da197c43e462e96a176273a57ab353695cc",
+    "lancer.py": "95a78f0e77ec1b3d9693432d33a5ad1e0d714c69706fefb465289c0abc1c787b",
+    "materiel-officiel\\jeu-fourni\\examples\\cycle_commandes.py": "fed8c1ac775a688319f3fb719f678ac1e2a57e7f69a45396baeac36116e29ca7",
+    "materiel-officiel\\jeu-fourni\\src\\blackjack\\__init__.py": "8fe8852a27261dba3077f0327e63544b33eb1e8bfafa4db201b894938c2c6fbd",
+    "materiel-officiel\\jeu-fourni\\src\\blackjack\\client_https.py": "32388764662a055511ad5ca100f22ef7098c1895d4a47ff153937e1948364d80",
+    "materiel-officiel\\jeu-fourni\\src\\blackjack\\engine.py": "768558dc5ce1ab0eab50c1632b7ec6292667d94eea3c47b2c15e152e5c59e8c5",
+    "materiel-officiel\\jeu-fourni\\src\\blackjack\\errors.py": "d2d24a90d16b9953e26348151adea0d665339ce8ca9ce0f6f05d66d64c35ba77",
+    "materiel-officiel\\jeu-fourni\\src\\blackjack\\local.py": "f2ad7cd1642f0b9d51a645d0cb0df5b7e8169a2e057aba1b958bc83aecb882d1",
+    "materiel-officiel\\jeu-fourni\\src\\blackjack\\memory.py": "b5b71ac7a00ed17e5ffc63087824a0c3729d8ec7a4b3cf2634f220023a7a1bcb",
+    "materiel-officiel\\jeu-fourni\\src\\blackjack\\model.py": "36e8017f9f5aed9913cb94632e52fef4b823bda218243588dd2b2fd76ac3c36c",
+    "materiel-officiel\\jeu-fourni\\src\\blackjack\\projection.py": "1870f036a1955629ea065954d34915ea79989e4a0f3c5cda8ca85f37000ace1e",
+    "materiel-officiel\\jeu-fourni\\src\\blackjack\\sessions.py": "98723f90128d764a15d741f4aeffa325ecab3a2898926fdbee882d9d77b647ac",
+    "materiel-officiel\\jeu-fourni\\src\\blackjack\\validation.py": "1698f8c8888e04dab3aa86091abbdb404db9a854da3b986b49b88e537fc190d7",
+    "materiel-officiel\\jeu-fourni\\tests\\support.py": "41182cfba0f9849c39ded5121518e1d15dfef4dc8fe975100f3b048a4f8cb9b0",
+    "materiel-officiel\\jeu-fourni\\tests\\test_engine.py": "f5fac8a95aeef7728171ff528bbf076e782bbc1b8c659eeddce31713364596bb",
+    "tests\\test_atelier.py": "3a004b6f41e4149b129102b971143bce63402ac6abcf06c554155956efcb1694"
+  },
+  "politique": "fixed17",
+  "apprentissage": false,
+  "limites": {
+    "max_hands": 5,
+    "max_seconds": 60.0,
+    "idle_seconds": 30.0,
+    "retention_seconds": 60.0
+  },
+  "recompenses_proposees": {
+    "win": 1,
+    "tie": 0,
+    "loss": -1
+  },
+  "bilans_avant": {
+    "bilans": [],
+    "mains_attribuees": []
+  }
+}

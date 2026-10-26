@@ -1,0 +1,1323 @@
+{
+  "schema": "esc006-public-excerpts-v1",
+  "notice": "Extrait réel et cas déterministes séparés; aucun antécédent illustratif dans ces données.",
+  "cases": [
+    {
+      "id": "premiere-main",
+      "kind": "generated-real",
+      "steps": [
+        {
+          "command": "create",
+          "action": null,
+          "observation": {
+            "protocol_version": "esc-api-v1",
+            "ruleset_id": "esc-blackjack-a26-v1",
+            "session_id": "e24d1b54dfdc4001ab4f617cb207b23c",
+            "hand_id": null,
+            "revision": 0,
+            "session_status": "active",
+            "end_reason": null,
+            "hand_status": "ready",
+            "bankroll": 1000,
+            "bankroll_before_hand": null,
+            "bet_pending": 0,
+            "player_cards": [],
+            "player_total": null,
+            "player_usable_ace": null,
+            "dealer_upcard": null,
+            "dealer_cards": [],
+            "dealer_total": null,
+            "legal_actions": [],
+            "shoe_id": null,
+            "shoe_reset": false,
+            "visible_events": [],
+            "result": null,
+            "limits": {
+              "max_hands": 40,
+              "max_seconds": 120,
+              "idle_seconds": 30,
+              "retention_seconds": 60,
+              "expires_at": 1792332234.9575315,
+              "hands_settled": 0
+            }
+          }
+        },
+        {
+          "command": "start",
+          "action": null,
+          "observation": {
+            "protocol_version": "esc-api-v1",
+            "ruleset_id": "esc-blackjack-a26-v1",
+            "session_id": "e24d1b54dfdc4001ab4f617cb207b23c",
+            "hand_id": "3e1ef6b2851d438cb0d8b9c0c63dfded",
+            "revision": 1,
+            "session_status": "active",
+            "end_reason": null,
+            "hand_status": "decision",
+            "bankroll": 950,
+            "bankroll_before_hand": 1000,
+            "bet_pending": 50,
+            "player_cards": [
+              {
+                "rank": "6",
+                "suit": "clubs"
+              },
+              {
+                "rank": "3",
+                "suit": "hearts"
+              }
+            ],
+            "player_total": 9,
+            "player_usable_ace": false,
+            "dealer_upcard": {
+              "rank": "A",
+              "suit": "spades"
+            },
+            "dealer_cards": [
+              {
+                "rank": "A",
+                "suit": "spades"
+              }
+            ],
+            "dealer_total": null,
+            "legal_actions": [
+              "hit",
+              "hold"
+            ],
+            "shoe_id": "fd5fdfe474bc4d0882223ace556c2e52",
+            "shoe_reset": true,
+            "visible_events": [
+              {
+                "event_id": "1",
+                "shoe_id": "fd5fdfe474bc4d0882223ace556c2e52",
+                "hand_id": "3e1ef6b2851d438cb0d8b9c0c63dfded",
+                "owner": "player",
+                "card": {
+                  "rank": "6",
+                  "suit": "clubs"
+                }
+              },
+              {
+                "event_id": "2",
+                "shoe_id": "fd5fdfe474bc4d0882223ace556c2e52",
+                "hand_id": "3e1ef6b2851d438cb0d8b9c0c63dfded",
+                "owner": "dealer",
+                "card": {
+                  "rank": "A",
+                  "suit": "spades"
+                }
+              },
+              {
+                "event_id": "3",
+                "shoe_id": "fd5fdfe474bc4d0882223ace556c2e52",
+                "hand_id": "3e1ef6b2851d438cb0d8b9c0c63dfded",
+                "owner": "player",
+                "card": {
+                  "rank": "3",
+                  "suit": "hearts"
+                }
+              }
+            ],
+            "result": null,
+            "limits": {
+              "max_hands": 40,
+              "max_seconds": 120,
+              "idle_seconds": 30,
+              "retention_seconds": 60,
+              "expires_at": 1792332234.958146,
+              "hands_settled": 0
+            }
+          }
+        },
+        {
+          "command": "act",
+          "action": "hit",
+          "observation": {
+            "protocol_version": "esc-api-v1",
+            "ruleset_id": "esc-blackjack-a26-v1",
+            "session_id": "e24d1b54dfdc4001ab4f617cb207b23c",
+            "hand_id": "3e1ef6b2851d438cb0d8b9c0c63dfded",
+            "revision": 2,
+            "session_status": "active",
+            "end_reason": null,
+            "hand_status": "decision",
+            "bankroll": 950,
+            "bankroll_before_hand": 1000,
+            "bet_pending": 50,
+            "player_cards": [
+              {
+                "rank": "6",
+                "suit": "clubs"
+              },
+              {
+                "rank": "3",
+                "suit": "hearts"
+              },
+              {
+                "rank": "2",
+                "suit": "clubs"
+              }
+            ],
+            "player_total": 11,
+            "player_usable_ace": false,
+            "dealer_upcard": {
+              "rank": "A",
+              "suit": "spades"
+            },
+            "dealer_cards": [
+              {
+                "rank": "A",
+                "suit": "spades"
+              }
+            ],
+            "dealer_total": null,
+            "legal_actions": [
+              "hit",
+              "hold"
+            ],
+            "shoe_id": "fd5fdfe474bc4d0882223ace556c2e52",
+            "shoe_reset": false,
+            "visible_events": [
+              {
+                "event_id": "4",
+                "shoe_id": "fd5fdfe474bc4d0882223ace556c2e52",
+                "hand_id": "3e1ef6b2851d438cb0d8b9c0c63dfded",
+                "owner": "player",
+                "card": {
+                  "rank": "2",
+                  "suit": "clubs"
+                }
+              }
+            ],
+            "result": null,
+            "limits": {
+              "max_hands": 40,
+              "max_seconds": 120,
+              "idle_seconds": 30,
+              "retention_seconds": 60,
+              "expires_at": 1792332234.9594064,
+              "hands_settled": 0
+            }
+          }
+        },
+        {
+          "command": "act",
+          "action": "hit",
+          "observation": {
+            "protocol_version": "esc-api-v1",
+            "ruleset_id": "esc-blackjack-a26-v1",
+            "session_id": "e24d1b54dfdc4001ab4f617cb207b23c",
+            "hand_id": "3e1ef6b2851d438cb0d8b9c0c63dfded",
+            "revision": 3,
+            "session_status": "active",
+            "end_reason": null,
+            "hand_status": "hand_over",
+            "bankroll": 1050,
+            "bankroll_before_hand": 1000,
+            "bet_pending": 0,
+            "player_cards": [
+              {
+                "rank": "6",
+                "suit": "clubs"
+              },
+              {
+                "rank": "3",
+                "suit": "hearts"
+              },
+              {
+                "rank": "2",
+                "suit": "clubs"
+              },
+              {
+                "rank": "K",
+                "suit": "diamonds"
+              }
+            ],
+            "player_total": 21,
+            "player_usable_ace": false,
+            "dealer_upcard": {
+              "rank": "A",
+              "suit": "spades"
+            },
+            "dealer_cards": [
+              {
+                "rank": "A",
+                "suit": "spades"
+              },
+              {
+                "rank": "5",
+                "suit": "spades"
+              },
+              {
+                "rank": "8",
+                "suit": "diamonds"
+              },
+              {
+                "rank": "J",
+                "suit": "diamonds"
+              }
+            ],
+            "dealer_total": 24,
+            "legal_actions": [],
+            "shoe_id": "fd5fdfe474bc4d0882223ace556c2e52",
+            "shoe_reset": false,
+            "visible_events": [
+              {
+                "event_id": "5",
+                "shoe_id": "fd5fdfe474bc4d0882223ace556c2e52",
+                "hand_id": "3e1ef6b2851d438cb0d8b9c0c63dfded",
+                "owner": "player",
+                "card": {
+                  "rank": "K",
+                  "suit": "diamonds"
+                }
+              },
+              {
+                "event_id": "6",
+                "shoe_id": "fd5fdfe474bc4d0882223ace556c2e52",
+                "hand_id": "3e1ef6b2851d438cb0d8b9c0c63dfded",
+                "owner": "dealer",
+                "card": {
+                  "rank": "5",
+                  "suit": "spades"
+                }
+              },
+              {
+                "event_id": "7",
+                "shoe_id": "fd5fdfe474bc4d0882223ace556c2e52",
+                "hand_id": "3e1ef6b2851d438cb0d8b9c0c63dfded",
+                "owner": "dealer",
+                "card": {
+                  "rank": "8",
+                  "suit": "diamonds"
+                }
+              },
+              {
+                "event_id": "8",
+                "shoe_id": "fd5fdfe474bc4d0882223ace556c2e52",
+                "hand_id": "3e1ef6b2851d438cb0d8b9c0c63dfded",
+                "owner": "dealer",
+                "card": {
+                  "rank": "J",
+                  "suit": "diamonds"
+                }
+              }
+            ],
+            "result": {
+              "outcome": "win",
+              "reason": "dealer_bust",
+              "stake": 50,
+              "credit": 100,
+              "net_gain": 50,
+              "bankroll_before": 1000,
+              "bankroll_after": 1050
+            },
+            "limits": {
+              "max_hands": 40,
+              "max_seconds": 120,
+              "idle_seconds": 30,
+              "retention_seconds": 60,
+              "expires_at": 1792332234.9605207,
+              "hands_settled": 1
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "visite-repetee",
+      "kind": "deterministic-fixture",
+      "steps": [
+        {
+          "command": "create",
+          "action": null,
+          "observation": {
+            "protocol_version": "esc-api-v1",
+            "ruleset_id": "esc-blackjack-a26-v1",
+            "session_id": "id-0",
+            "hand_id": null,
+            "revision": 0,
+            "session_status": "active",
+            "end_reason": null,
+            "hand_status": "ready",
+            "bankroll": 1000,
+            "bankroll_before_hand": null,
+            "bet_pending": 0,
+            "player_cards": [],
+            "player_total": null,
+            "player_usable_ace": null,
+            "dealer_upcard": null,
+            "dealer_cards": [],
+            "dealer_total": null,
+            "legal_actions": [],
+            "shoe_id": null,
+            "shoe_reset": false,
+            "visible_events": [],
+            "result": null,
+            "limits": {
+              "max_hands": 10,
+              "max_seconds": 120,
+              "idle_seconds": 30,
+              "retention_seconds": 60,
+              "expires_at": 1030.0,
+              "hands_settled": 0
+            }
+          }
+        },
+        {
+          "command": "start",
+          "action": null,
+          "observation": {
+            "protocol_version": "esc-api-v1",
+            "ruleset_id": "esc-blackjack-a26-v1",
+            "session_id": "id-0",
+            "hand_id": "id-1",
+            "revision": 1,
+            "session_status": "active",
+            "end_reason": null,
+            "hand_status": "decision",
+            "bankroll": 950,
+            "bankroll_before_hand": 1000,
+            "bet_pending": 50,
+            "player_cards": [
+              {
+                "rank": "A",
+                "suit": "clubs"
+              },
+              {
+                "rank": "2",
+                "suit": "clubs"
+              }
+            ],
+            "player_total": 13,
+            "player_usable_ace": true,
+            "dealer_upcard": {
+              "rank": "9",
+              "suit": "clubs"
+            },
+            "dealer_cards": [
+              {
+                "rank": "9",
+                "suit": "clubs"
+              }
+            ],
+            "dealer_total": null,
+            "legal_actions": [
+              "hit",
+              "hold"
+            ],
+            "shoe_id": "fixture-shoe",
+            "shoe_reset": false,
+            "visible_events": [
+              {
+                "event_id": "1",
+                "shoe_id": "fixture-shoe",
+                "hand_id": "id-1",
+                "owner": "player",
+                "card": {
+                  "rank": "A",
+                  "suit": "clubs"
+                }
+              },
+              {
+                "event_id": "2",
+                "shoe_id": "fixture-shoe",
+                "hand_id": "id-1",
+                "owner": "dealer",
+                "card": {
+                  "rank": "9",
+                  "suit": "clubs"
+                }
+              },
+              {
+                "event_id": "3",
+                "shoe_id": "fixture-shoe",
+                "hand_id": "id-1",
+                "owner": "player",
+                "card": {
+                  "rank": "2",
+                  "suit": "clubs"
+                }
+              }
+            ],
+            "result": null,
+            "limits": {
+              "max_hands": 10,
+              "max_seconds": 120,
+              "idle_seconds": 30,
+              "retention_seconds": 60,
+              "expires_at": 1030.0,
+              "hands_settled": 0
+            }
+          }
+        },
+        {
+          "command": "observe",
+          "action": null,
+          "observation": {
+            "protocol_version": "esc-api-v1",
+            "ruleset_id": "esc-blackjack-a26-v1",
+            "session_id": "id-0",
+            "hand_id": "id-1",
+            "revision": 1,
+            "session_status": "active",
+            "end_reason": null,
+            "hand_status": "decision",
+            "bankroll": 950,
+            "bankroll_before_hand": 1000,
+            "bet_pending": 50,
+            "player_cards": [
+              {
+                "rank": "A",
+                "suit": "clubs"
+              },
+              {
+                "rank": "2",
+                "suit": "clubs"
+              }
+            ],
+            "player_total": 13,
+            "player_usable_ace": true,
+            "dealer_upcard": {
+              "rank": "9",
+              "suit": "clubs"
+            },
+            "dealer_cards": [
+              {
+                "rank": "9",
+                "suit": "clubs"
+              }
+            ],
+            "dealer_total": null,
+            "legal_actions": [
+              "hit",
+              "hold"
+            ],
+            "shoe_id": "fixture-shoe",
+            "shoe_reset": false,
+            "visible_events": [
+              {
+                "event_id": "1",
+                "shoe_id": "fixture-shoe",
+                "hand_id": "id-1",
+                "owner": "player",
+                "card": {
+                  "rank": "A",
+                  "suit": "clubs"
+                }
+              },
+              {
+                "event_id": "2",
+                "shoe_id": "fixture-shoe",
+                "hand_id": "id-1",
+                "owner": "dealer",
+                "card": {
+                  "rank": "9",
+                  "suit": "clubs"
+                }
+              },
+              {
+                "event_id": "3",
+                "shoe_id": "fixture-shoe",
+                "hand_id": "id-1",
+                "owner": "player",
+                "card": {
+                  "rank": "2",
+                  "suit": "clubs"
+                }
+              }
+            ],
+            "result": null,
+            "limits": {
+              "max_hands": 10,
+              "max_seconds": 120,
+              "idle_seconds": 30,
+              "retention_seconds": 60,
+              "expires_at": 1030.0,
+              "hands_settled": 0
+            }
+          }
+        },
+        {
+          "command": "act",
+          "action": "hit",
+          "observation": {
+            "protocol_version": "esc-api-v1",
+            "ruleset_id": "esc-blackjack-a26-v1",
+            "session_id": "id-0",
+            "hand_id": "id-1",
+            "revision": 2,
+            "session_status": "active",
+            "end_reason": null,
+            "hand_status": "decision",
+            "bankroll": 950,
+            "bankroll_before_hand": 1000,
+            "bet_pending": 50,
+            "player_cards": [
+              {
+                "rank": "A",
+                "suit": "clubs"
+              },
+              {
+                "rank": "2",
+                "suit": "clubs"
+              },
+              {
+                "rank": "K",
+                "suit": "clubs"
+              }
+            ],
+            "player_total": 13,
+            "player_usable_ace": false,
+            "dealer_upcard": {
+              "rank": "9",
+              "suit": "clubs"
+            },
+            "dealer_cards": [
+              {
+                "rank": "9",
+                "suit": "clubs"
+              }
+            ],
+            "dealer_total": null,
+            "legal_actions": [
+              "hit",
+              "hold"
+            ],
+            "shoe_id": "fixture-shoe",
+            "shoe_reset": false,
+            "visible_events": [
+              {
+                "event_id": "4",
+                "shoe_id": "fixture-shoe",
+                "hand_id": "id-1",
+                "owner": "player",
+                "card": {
+                  "rank": "K",
+                  "suit": "clubs"
+                }
+              }
+            ],
+            "result": null,
+            "limits": {
+              "max_hands": 10,
+              "max_seconds": 120,
+              "idle_seconds": 30,
+              "retention_seconds": 60,
+              "expires_at": 1030.0,
+              "hands_settled": 0
+            }
+          }
+        },
+        {
+          "command": "act",
+          "action": "hit",
+          "observation": {
+            "protocol_version": "esc-api-v1",
+            "ruleset_id": "esc-blackjack-a26-v1",
+            "session_id": "id-0",
+            "hand_id": "id-1",
+            "revision": 3,
+            "session_status": "active",
+            "end_reason": null,
+            "hand_status": "decision",
+            "bankroll": 950,
+            "bankroll_before_hand": 1000,
+            "bet_pending": 50,
+            "player_cards": [
+              {
+                "rank": "A",
+                "suit": "clubs"
+              },
+              {
+                "rank": "2",
+                "suit": "clubs"
+              },
+              {
+                "rank": "K",
+                "suit": "clubs"
+              },
+              {
+                "rank": "2",
+                "suit": "diamonds"
+              }
+            ],
+            "player_total": 15,
+            "player_usable_ace": false,
+            "dealer_upcard": {
+              "rank": "9",
+              "suit": "clubs"
+            },
+            "dealer_cards": [
+              {
+                "rank": "9",
+                "suit": "clubs"
+              }
+            ],
+            "dealer_total": null,
+            "legal_actions": [
+              "hit",
+              "hold"
+            ],
+            "shoe_id": "fixture-shoe",
+            "shoe_reset": false,
+            "visible_events": [
+              {
+                "event_id": "5",
+                "shoe_id": "fixture-shoe",
+                "hand_id": "id-1",
+                "owner": "player",
+                "card": {
+                  "rank": "2",
+                  "suit": "diamonds"
+                }
+              }
+            ],
+            "result": null,
+            "limits": {
+              "max_hands": 10,
+              "max_seconds": 120,
+              "idle_seconds": 30,
+              "retention_seconds": 60,
+              "expires_at": 1030.0,
+              "hands_settled": 0
+            }
+          }
+        },
+        {
+          "command": "act",
+          "action": "hold",
+          "observation": {
+            "protocol_version": "esc-api-v1",
+            "ruleset_id": "esc-blackjack-a26-v1",
+            "session_id": "id-0",
+            "hand_id": "id-1",
+            "revision": 4,
+            "session_status": "active",
+            "end_reason": null,
+            "hand_status": "hand_over",
+            "bankroll": 950,
+            "bankroll_before_hand": 1000,
+            "bet_pending": 0,
+            "player_cards": [
+              {
+                "rank": "A",
+                "suit": "clubs"
+              },
+              {
+                "rank": "2",
+                "suit": "clubs"
+              },
+              {
+                "rank": "K",
+                "suit": "clubs"
+              },
+              {
+                "rank": "2",
+                "suit": "diamonds"
+              }
+            ],
+            "player_total": 15,
+            "player_usable_ace": false,
+            "dealer_upcard": {
+              "rank": "9",
+              "suit": "clubs"
+            },
+            "dealer_cards": [
+              {
+                "rank": "9",
+                "suit": "clubs"
+              },
+              {
+                "rank": "7",
+                "suit": "clubs"
+              },
+              {
+                "rank": "3",
+                "suit": "clubs"
+              }
+            ],
+            "dealer_total": 19,
+            "legal_actions": [],
+            "shoe_id": "fixture-shoe",
+            "shoe_reset": false,
+            "visible_events": [
+              {
+                "event_id": "6",
+                "shoe_id": "fixture-shoe",
+                "hand_id": "id-1",
+                "owner": "dealer",
+                "card": {
+                  "rank": "7",
+                  "suit": "clubs"
+                }
+              },
+              {
+                "event_id": "7",
+                "shoe_id": "fixture-shoe",
+                "hand_id": "id-1",
+                "owner": "dealer",
+                "card": {
+                  "rank": "3",
+                  "suit": "clubs"
+                }
+              }
+            ],
+            "result": {
+              "outcome": "loss",
+              "reason": "lower_total",
+              "stake": 50,
+              "credit": 0,
+              "net_gain": -50,
+              "bankroll_before": 1000,
+              "bankroll_after": 950
+            },
+            "limits": {
+              "max_hands": 10,
+              "max_seconds": 120,
+              "idle_seconds": 30,
+              "retention_seconds": 60,
+              "expires_at": 1030.0,
+              "hands_settled": 1
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "naturel",
+      "kind": "deterministic-fixture",
+      "steps": [
+        {
+          "command": "create",
+          "action": null,
+          "observation": {
+            "protocol_version": "esc-api-v1",
+            "ruleset_id": "esc-blackjack-a26-v1",
+            "session_id": "id-0",
+            "hand_id": null,
+            "revision": 0,
+            "session_status": "active",
+            "end_reason": null,
+            "hand_status": "ready",
+            "bankroll": 1000,
+            "bankroll_before_hand": null,
+            "bet_pending": 0,
+            "player_cards": [],
+            "player_total": null,
+            "player_usable_ace": null,
+            "dealer_upcard": null,
+            "dealer_cards": [],
+            "dealer_total": null,
+            "legal_actions": [],
+            "shoe_id": null,
+            "shoe_reset": false,
+            "visible_events": [],
+            "result": null,
+            "limits": {
+              "max_hands": 10,
+              "max_seconds": 120,
+              "idle_seconds": 30,
+              "retention_seconds": 60,
+              "expires_at": 1030.0,
+              "hands_settled": 0
+            }
+          }
+        },
+        {
+          "command": "start",
+          "action": null,
+          "observation": {
+            "protocol_version": "esc-api-v1",
+            "ruleset_id": "esc-blackjack-a26-v1",
+            "session_id": "id-0",
+            "hand_id": "id-1",
+            "revision": 1,
+            "session_status": "active",
+            "end_reason": null,
+            "hand_status": "hand_over",
+            "bankroll": 1050,
+            "bankroll_before_hand": 1000,
+            "bet_pending": 0,
+            "player_cards": [
+              {
+                "rank": "A",
+                "suit": "clubs"
+              },
+              {
+                "rank": "K",
+                "suit": "clubs"
+              }
+            ],
+            "player_total": 21,
+            "player_usable_ace": true,
+            "dealer_upcard": {
+              "rank": "9",
+              "suit": "clubs"
+            },
+            "dealer_cards": [
+              {
+                "rank": "9",
+                "suit": "clubs"
+              },
+              {
+                "rank": "7",
+                "suit": "clubs"
+              }
+            ],
+            "dealer_total": 16,
+            "legal_actions": [],
+            "shoe_id": "fixture-shoe",
+            "shoe_reset": false,
+            "visible_events": [
+              {
+                "event_id": "1",
+                "shoe_id": "fixture-shoe",
+                "hand_id": "id-1",
+                "owner": "player",
+                "card": {
+                  "rank": "A",
+                  "suit": "clubs"
+                }
+              },
+              {
+                "event_id": "2",
+                "shoe_id": "fixture-shoe",
+                "hand_id": "id-1",
+                "owner": "dealer",
+                "card": {
+                  "rank": "9",
+                  "suit": "clubs"
+                }
+              },
+              {
+                "event_id": "3",
+                "shoe_id": "fixture-shoe",
+                "hand_id": "id-1",
+                "owner": "player",
+                "card": {
+                  "rank": "K",
+                  "suit": "clubs"
+                }
+              },
+              {
+                "event_id": "4",
+                "shoe_id": "fixture-shoe",
+                "hand_id": "id-1",
+                "owner": "dealer",
+                "card": {
+                  "rank": "7",
+                  "suit": "clubs"
+                }
+              }
+            ],
+            "result": {
+              "outcome": "win",
+              "reason": "player_natural",
+              "stake": 50,
+              "credit": 100,
+              "net_gain": 50,
+              "bankroll_before": 1000,
+              "bankroll_after": 1050
+            },
+            "limits": {
+              "max_hands": 10,
+              "max_seconds": 120,
+              "idle_seconds": 30,
+              "retention_seconds": 60,
+              "expires_at": 1030.0,
+              "hands_settled": 1
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "interruption",
+      "kind": "deterministic-fixture",
+      "steps": [
+        {
+          "command": "create",
+          "action": null,
+          "observation": {
+            "protocol_version": "esc-api-v1",
+            "ruleset_id": "esc-blackjack-a26-v1",
+            "session_id": "id-0",
+            "hand_id": null,
+            "revision": 0,
+            "session_status": "active",
+            "end_reason": null,
+            "hand_status": "ready",
+            "bankroll": 1000,
+            "bankroll_before_hand": null,
+            "bet_pending": 0,
+            "player_cards": [],
+            "player_total": null,
+            "player_usable_ace": null,
+            "dealer_upcard": null,
+            "dealer_cards": [],
+            "dealer_total": null,
+            "legal_actions": [],
+            "shoe_id": null,
+            "shoe_reset": false,
+            "visible_events": [],
+            "result": null,
+            "limits": {
+              "max_hands": 10,
+              "max_seconds": 120,
+              "idle_seconds": 30,
+              "retention_seconds": 60,
+              "expires_at": 1030.0,
+              "hands_settled": 0
+            }
+          }
+        },
+        {
+          "command": "start",
+          "action": null,
+          "observation": {
+            "protocol_version": "esc-api-v1",
+            "ruleset_id": "esc-blackjack-a26-v1",
+            "session_id": "id-0",
+            "hand_id": "id-1",
+            "revision": 1,
+            "session_status": "active",
+            "end_reason": null,
+            "hand_status": "decision",
+            "bankroll": 950,
+            "bankroll_before_hand": 1000,
+            "bet_pending": 50,
+            "player_cards": [
+              {
+                "rank": "10",
+                "suit": "clubs"
+              },
+              {
+                "rank": "8",
+                "suit": "clubs"
+              }
+            ],
+            "player_total": 18,
+            "player_usable_ace": false,
+            "dealer_upcard": {
+              "rank": "10",
+              "suit": "diamonds"
+            },
+            "dealer_cards": [
+              {
+                "rank": "10",
+                "suit": "diamonds"
+              }
+            ],
+            "dealer_total": null,
+            "legal_actions": [
+              "hit",
+              "hold"
+            ],
+            "shoe_id": "fixture-shoe",
+            "shoe_reset": false,
+            "visible_events": [
+              {
+                "event_id": "1",
+                "shoe_id": "fixture-shoe",
+                "hand_id": "id-1",
+                "owner": "player",
+                "card": {
+                  "rank": "10",
+                  "suit": "clubs"
+                }
+              },
+              {
+                "event_id": "2",
+                "shoe_id": "fixture-shoe",
+                "hand_id": "id-1",
+                "owner": "dealer",
+                "card": {
+                  "rank": "10",
+                  "suit": "diamonds"
+                }
+              },
+              {
+                "event_id": "3",
+                "shoe_id": "fixture-shoe",
+                "hand_id": "id-1",
+                "owner": "player",
+                "card": {
+                  "rank": "8",
+                  "suit": "clubs"
+                }
+              }
+            ],
+            "result": null,
+            "limits": {
+              "max_hands": 10,
+              "max_seconds": 120,
+              "idle_seconds": 30,
+              "retention_seconds": 60,
+              "expires_at": 1030.0,
+              "hands_settled": 0
+            }
+          }
+        },
+        {
+          "command": "close",
+          "action": null,
+          "observation": {
+            "protocol_version": "esc-api-v1",
+            "ruleset_id": "esc-blackjack-a26-v1",
+            "session_id": "id-0",
+            "hand_id": "id-1",
+            "revision": 2,
+            "session_status": "interrupted",
+            "end_reason": "explicit_close",
+            "hand_status": "decision",
+            "bankroll": 950,
+            "bankroll_before_hand": 1000,
+            "bet_pending": 50,
+            "player_cards": [
+              {
+                "rank": "10",
+                "suit": "clubs"
+              },
+              {
+                "rank": "8",
+                "suit": "clubs"
+              }
+            ],
+            "player_total": 18,
+            "player_usable_ace": false,
+            "dealer_upcard": {
+              "rank": "10",
+              "suit": "diamonds"
+            },
+            "dealer_cards": [
+              {
+                "rank": "10",
+                "suit": "diamonds"
+              }
+            ],
+            "dealer_total": null,
+            "legal_actions": [],
+            "shoe_id": "fixture-shoe",
+            "shoe_reset": false,
+            "visible_events": [],
+            "result": null,
+            "limits": {
+              "max_hands": 10,
+              "max_seconds": 120,
+              "idle_seconds": 30,
+              "retention_seconds": 60,
+              "expires_at": 1030.0,
+              "hands_settled": 0
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "borne",
+      "kind": "deterministic-fixture",
+      "steps": [
+        {
+          "command": "create",
+          "action": null,
+          "observation": {
+            "protocol_version": "esc-api-v1",
+            "ruleset_id": "esc-blackjack-a26-v1",
+            "session_id": "id-0",
+            "hand_id": null,
+            "revision": 0,
+            "session_status": "active",
+            "end_reason": null,
+            "hand_status": "ready",
+            "bankroll": 1000,
+            "bankroll_before_hand": null,
+            "bet_pending": 0,
+            "player_cards": [],
+            "player_total": null,
+            "player_usable_ace": null,
+            "dealer_upcard": null,
+            "dealer_cards": [],
+            "dealer_total": null,
+            "legal_actions": [],
+            "shoe_id": null,
+            "shoe_reset": false,
+            "visible_events": [],
+            "result": null,
+            "limits": {
+              "max_hands": 1,
+              "max_seconds": 120,
+              "idle_seconds": 30,
+              "retention_seconds": 60,
+              "expires_at": 1030.0,
+              "hands_settled": 0
+            }
+          }
+        },
+        {
+          "command": "start",
+          "action": null,
+          "observation": {
+            "protocol_version": "esc-api-v1",
+            "ruleset_id": "esc-blackjack-a26-v1",
+            "session_id": "id-0",
+            "hand_id": "id-1",
+            "revision": 1,
+            "session_status": "active",
+            "end_reason": null,
+            "hand_status": "decision",
+            "bankroll": 950,
+            "bankroll_before_hand": 1000,
+            "bet_pending": 50,
+            "player_cards": [
+              {
+                "rank": "10",
+                "suit": "clubs"
+              },
+              {
+                "rank": "8",
+                "suit": "clubs"
+              }
+            ],
+            "player_total": 18,
+            "player_usable_ace": false,
+            "dealer_upcard": {
+              "rank": "10",
+              "suit": "diamonds"
+            },
+            "dealer_cards": [
+              {
+                "rank": "10",
+                "suit": "diamonds"
+              }
+            ],
+            "dealer_total": null,
+            "legal_actions": [
+              "hit",
+              "hold"
+            ],
+            "shoe_id": "fixture-shoe",
+            "shoe_reset": false,
+            "visible_events": [
+              {
+                "event_id": "1",
+                "shoe_id": "fixture-shoe",
+                "hand_id": "id-1",
+                "owner": "player",
+                "card": {
+                  "rank": "10",
+                  "suit": "clubs"
+                }
+              },
+              {
+                "event_id": "2",
+                "shoe_id": "fixture-shoe",
+                "hand_id": "id-1",
+                "owner": "dealer",
+                "card": {
+                  "rank": "10",
+                  "suit": "diamonds"
+                }
+              },
+              {
+                "event_id": "3",
+                "shoe_id": "fixture-shoe",
+                "hand_id": "id-1",
+                "owner": "player",
+                "card": {
+                  "rank": "8",
+                  "suit": "clubs"
+                }
+              }
+            ],
+            "result": null,
+            "limits": {
+              "max_hands": 1,
+              "max_seconds": 120,
+              "idle_seconds": 30,
+              "retention_seconds": 60,
+              "expires_at": 1030.0,
+              "hands_settled": 0
+            }
+          }
+        },
+        {
+          "command": "act",
+          "action": "hold",
+          "observation": {
+            "protocol_version": "esc-api-v1",
+            "ruleset_id": "esc-blackjack-a26-v1",
+            "session_id": "id-0",
+            "hand_id": "id-1",
+            "revision": 2,
+            "session_status": "truncated",
+            "end_reason": "hand_limit",
+            "hand_status": "hand_over",
+            "bankroll": 1000,
+            "bankroll_before_hand": 1000,
+            "bet_pending": 0,
+            "player_cards": [
+              {
+                "rank": "10",
+                "suit": "clubs"
+              },
+              {
+                "rank": "8",
+                "suit": "clubs"
+              }
+            ],
+            "player_total": 18,
+            "player_usable_ace": false,
+            "dealer_upcard": {
+              "rank": "10",
+              "suit": "diamonds"
+            },
+            "dealer_cards": [
+              {
+                "rank": "10",
+                "suit": "diamonds"
+              },
+              {
+                "rank": "8",
+                "suit": "diamonds"
+              }
+            ],
+            "dealer_total": 18,
+            "legal_actions": [],
+            "shoe_id": "fixture-shoe",
+            "shoe_reset": false,
+            "visible_events": [
+              {
+                "event_id": "4",
+                "shoe_id": "fixture-shoe",
+                "hand_id": "id-1",
+                "owner": "dealer",
+                "card": {
+                  "rank": "8",
+                  "suit": "diamonds"
+                }
+              }
+            ],
+            "result": {
+              "outcome": "tie",
+              "reason": "equal_total",
+              "stake": 50,
+              "credit": 50,
+              "net_gain": 0,
+              "bankroll_before": 1000,
+              "bankroll_after": 1000
+            },
+            "limits": {
+              "max_hands": 1,
+              "max_seconds": 120,
+              "idle_seconds": 30,
+              "retention_seconds": 60,
+              "expires_at": 1030.0,
+              "hands_settled": 1
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
