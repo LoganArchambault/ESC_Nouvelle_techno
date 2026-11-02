@@ -1,4 +1,4 @@
-# Atelier 08 — Fixed-17 et premiers bilans
+# Atelier — Fixed-17 et politique apprise
 
 Version : atelier08-v1. Auteur du code ajouté : assistant IA, à vérifier et à expliquer par les membres du binôme. Noms des membres : à compléter.
 
@@ -41,9 +41,27 @@ py -3.13 lancer.py --politique aleatoire --apprendre --table preuves/table-mon-b
 
 Sous Linux/macOS : remplacer `py -3.13` par le chemin de CPython 3.13, généralement `python3.13`.
 
+## Politique apprise
+
+Entraîner à partir de la table existante (ou en créer une si elle n'existe pas) :
+
+```powershell
+py -3.13 lancer.py --politique apprise --apprendre --table preuves/table-mon-binome.json --max-hands 5 --max-seconds 60 --idle-seconds 30 --retention-seconds 60
+```
+
+Entraînement : à chaque décision, exploration uniforme parmi les actions légales avec epsilon = 0,25; sinon, choix uniforme parmi les actions légales de Q maximal. Les lectures inconnues valent zéro sans ajouter d'entrée. Chaque visite acceptée reçoit la récompense terminale au règlement, puis la table est réutilisée pour les mains suivantes.
+
+Mesurer avec la même table, sans apprentissage et avec epsilon = 0 :
+
+```powershell
+py -3.13 lancer.py --politique apprise --table preuves/table-mon-binome.json --max-hands 5 --max-seconds 60 --idle-seconds 30 --retention-seconds 60
+```
+
+La mesure exige un fichier de table existant et ne le modifie pas; les égalités restent départagées uniformément au hasard. Q est une récompense moyenne estimée, pas une probabilité de victoire. Utiliser les mêmes options de récompense que lors de la création de la table.
+
 ## Fichiers à comprendre
 
-- `atelier/joueur.py` : état public, Fixed-17, choix uniforme via `choice`, reconnaissance d'une action acceptée et table N/S/Q.
+- `atelier/joueur.py` : état public, politiques Fixed-17, aléatoire et apprise, reconnaissance d'une action acceptée et table N/S/Q.
 - `lancer.py` : cycle création → distribution → décisions → règlement, sauvegarde immédiate des traces, table persistante entre séances.
 - `tests/test_atelier.py` : propres vérifications de la frontière, des bilans et du pilotage.
 - `preuves/` : exécutions réelles réalisées par l'assistant; chaque nouvelle commande produit un autre sous-dossier.
@@ -72,7 +90,7 @@ Les mains et événements affichés ne sont pas rejouables dans un nouveau proce
 
 L'état `(total, carte visible)` regroupe les as utilisables et non utilisables. La politique utilise seulement le total fourni; aucune carte cachée, graine ou donnée privée ne participe au choix. Les tests déterministes du cycle utilisent des graines locales de test, jamais des entrées de la politique. Les preuves d'atelier sont produites sans graine imposée.
 
-Fixed-17 n'apprend pas. La collecte aléatoire alimente une table mais ne choisit jamais selon Q. Sélection par maximum, epsilon et gel en mesure restent pour la prochaine rencontre. Aucun score minimal, campagne finale ou couverture exhaustive n'est revendiqué.
+Fixed-17 n'apprend pas. La collecte aléatoire alimente une table mais ne choisit jamais selon Q; la politique apprise l'utilise pour ses décisions. Aucun score minimal, campagne finale ou couverture exhaustive n'est revendiqué.
 
 Les tests synthétiques vérifient 16/17, naturels, interruption, réattribution, inconnus et zéro; ils sont identifiés comme tels. Une partie aléatoire ne prouve pas à elle seule ces cas limites. Le test du hasard vérifie l'appel à `Random.choice` sur la liste légale, pas une fréquence exacte dans une petite collecte.
 

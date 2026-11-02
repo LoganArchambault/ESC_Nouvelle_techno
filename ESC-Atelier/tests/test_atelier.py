@@ -44,6 +44,50 @@ class PolitiqueTests(unittest.TestCase):
         self.assertEqual(choisir(o, 'aleatoire', rng), 'hold')
         self.assertIs(rng.actions, o['legal_actions'])
 
+    def test_politique_apprise_exploration_exploitation_et_egalites(self):
+        class GenerateurTemoin:
+            def __init__(self, tirage, index):
+                self.tirage = tirage
+                self.index = index
+            def random(self):
+                return self.tirage
+            def choice(self, actions):
+                self.actions = actions
+                return actions[self.index]
+
+        b = Bilans({'bilans': [
+            {'etat': [16, 10], 'action': 'hit', 'N': 2, 'S': -1},
+            {'etat': [16, 10], 'action': 'hold', 'N': 2, 'S': 1},
+        ]})
+        o = observation(rang='10')
+        avant = b.exporter()
+        rng = GenerateurTemoin(0.249, 0)
+        self.assertEqual(choisir(o, 'apprise', rng, b, 0.25), 'hit')
+        self.assertEqual(rng.actions, ['hit', 'hold'])
+        rng = GenerateurTemoin(0.25, 0)
+        self.assertEqual(choisir(o, 'apprise', rng, b, 0.25), 'hold')
+        self.assertEqual(rng.actions, ['hold'])
+        o['legal_actions'] = ['hit']
+        self.assertEqual(choisir(o, 'apprise', rng, b, 0), 'hit')
+        o['legal_actions'] = ['hit', 'hold']
+        o['player_total'] = 15
+        for index, attendu in enumerate(['hit', 'hold']):
+            rng = GenerateurTemoin(0, index)
+            self.assertEqual(choisir(o, 'apprise', rng, b, 0), attendu)
+            self.assertEqual(rng.actions, ['hit', 'hold'])
+        self.assertEqual(b.exporter(), avant)
+
+    def test_politique_apprise_toutes_valeurs_negatives(self):
+        b = Bilans({'bilans': [
+            {'etat': [16, 10], 'action': 'hit', 'N': 1, 'S': -2},
+            {'etat': [16, 10], 'action': 'hold', 'N': 1, 'S': -1},
+        ]})
+        self.assertEqual(choisir(observation(rang='10'), 'apprise', Random(0), b), 'hold')
+        with self.assertRaises(ValueError):
+            choisir(observation(), 'apprise', Random(0))
+        with self.assertRaises(ValueError):
+            choisir(observation(), 'apprise', Random(0), b, 1.1)
+
     def test_expiration_ne_prouve_pas_acceptation(self):
         avant = observation()
         apres = deepcopy(avant)
@@ -79,6 +123,66 @@ class BilansTests(unittest.TestCase):
 
 
 class CycleTests(unittest.TestCase):
+    def test_mesure_utilise_table_sans_la_modifier(self):
+        b = Bilans({'bilans': [
+            {'etat': [16, 10], 'action': 'hit', 'N': 2, 'S': -1},
+            {'etat': [16, 10], 'action': 'hold', 'N': 2, 'S': 1},
+        ], 'mains_attribuees': [['ancien', 'main']]})
+        avant = deepcopy(b.exporter())
+        mains, fin = executer(LocalClient(Limits(5, 60, 30, 60), seed=8),
+                              'apprise', Random(10), b, {'win': 1, 'tie': 0, 'loss': -1},
+                              False, lambda t: None)
+        self.assertEqual(len(mains), 5)
+        self.assertEqual(fin['end_reason'], 'hand_limit')
+        self.assertGreater(sum(len(m['trajectoire']) for m in mains), 0)
+        self.assertTrue(all(not m['bilans'] for m in mains))
+        self.assertEqual(b.exporter(), avant)
+
+    def test_apprentissage_influence_la_main_suivante(self):
+        class ClientScenario:
+            def __init__(self):
+                self.numero = 0
+                self.actions = []
+            def create_session(self, **kw):
+                o = observation(rang='10')
+                o.update(hand_status='ready', hand_id=None, revision=0)
+                return o
+            def start_hand(self, **kw):
+                self.numero += 1
+                o = observation(rang='10')
+                o.update(hand_id=str(self.numero), revision=self.numero * 2 - 1)
+                return o
+            def act(self, action, **kw):
+                self.actions.append(action)
+                o = observation(rang='10')
+                o.update(hand_id=str(self.numero), revision=self.numero * 2,
+                         hand_status='hand_over', legal_actions=[],
+                         result={'outcome': 'loss'}, end_reason=None)
+                if action == 'hit':
+                    o['player_cards'].append({'rank': '10'})
+                if self.numero == 2:
+                    o.update(session_status='truncated', end_reason='hand_limit',
+                             limits={'hands_settled': 2})
+                return o
+
+        class Exploitation:
+            def random(self):
+                return 0.5
+            def choice(self, actions):
+                return actions[0]
+
+        b = Bilans({'bilans': [
+            {'etat': [16, 10], 'action': 'hit', 'N': 4, 'S': -1},
+            {'etat': [16, 10], 'action': 'hold', 'N': 1, 'S': 0},
+        ]})
+        client = ClientScenario()
+        mains, _ = executer(client, 'apprise', Exploitation(), b,
+                            {'win': 1, 'tie': 0, 'loss': -1}, True, lambda t: None)
+        self.assertEqual(client.actions, ['hold', 'hit'])
+        self.assertEqual([len(m['trajectoire']) for m in mains], [1, 1])
+        self.assertEqual(b.consulter((16, 10), 'hold'), dict(N=2, S=-1, Q=-0.5))
+        self.assertEqual(b.consulter((16, 10), 'hit'), dict(N=5, S=-2, Q=-0.4))
+
     def test_cinq_mains_meme_seance_et_aucun_apprentissage_fixed17(self):
         traces = []
         b = Bilans()

@@ -62,7 +62,8 @@ def executer(client, politique, rng, bilans, recompenses, apprendre, trace):
             observation = appel('start_hand', session_id=observation['session_id'],
                                 expected_revision=observation['revision'])
         elif observation['hand_status'] == 'decision':
-            action = choisir(observation, politique, rng)
+            action = choisir(observation, politique, rng, bilans,
+                             epsilon=0.25 if apprendre else 0)
             avant = observation
             observation = appel('act', session_id=avant['session_id'], action=action,
                                 expected_revision=avant['revision'])
@@ -78,7 +79,7 @@ def executer(client, politique, rng, bilans, recompenses, apprendre, trace):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--politique', required=True, choices=['fixed17', 'aleatoire'])
+    parser.add_argument('--politique', required=True, choices=['fixed17', 'aleatoire', 'apprise'])
     parser.add_argument('--max-hands', type=int, required=True)
     parser.add_argument('--max-seconds', type=float, required=True)
     parser.add_argument('--idle-seconds', type=float, required=True)
@@ -98,10 +99,14 @@ def main():
         parser.error('CPython 3.13 requis. Vérifiez py -3.13 ou le chemin de Python 3.13.')
     if args.seances < 1:
         parser.error('--seances doit être positif.')
-    if args.apprendre and args.politique != 'aleatoire':
-        parser.error('Pour cet atelier, seuls les choix aléatoires alimentent les bilans.')
+    if args.apprendre and args.politique not in ('aleatoire', 'apprise'):
+        parser.error('La politique Fixed-17 ne permet pas l’apprentissage.')
     if args.apprendre and args.table is None:
         parser.error('--table est requis avec --apprendre.')
+    if args.politique == 'apprise' and args.table is None:
+        parser.error('--table est requis avec la politique apprise.')
+    if args.politique == 'apprise' and not args.apprendre and not args.table.is_file():
+        parser.error('La mesure nécessite une table existante.')
     limites = Limits(args.max_hands, args.max_seconds, args.idle_seconds, args.retention_seconds)
     recompenses = {'win': args.victoire, 'tie': args.nul, 'loss': args.defaite}
     document = json.loads(args.table.read_text(encoding='utf-8')) if args.table and args.table.exists() else {}
@@ -119,6 +124,7 @@ def main():
                 'python': sys.version, 'implementation': platform.python_implementation(),
                 'cible_cpython313_validee': cible, 'sha256_sources': empreintes,
                 'politique': args.politique, 'apprentissage': args.apprendre,
+                'epsilon': (0.25 if args.apprendre else 0) if args.politique == 'apprise' else None,
                 'limites': asdict(limites), 'recompenses_proposees': recompenses,
                 'bilans_avant': bilans.exporter()}
     sauver(dossier / 'metadata.json', metadata)

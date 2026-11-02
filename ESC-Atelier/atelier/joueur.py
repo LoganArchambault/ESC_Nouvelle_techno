@@ -1,4 +1,4 @@
-"""Décisions publiques et moyennes de retours terminaux, sans sélection apprise."""
+"""Décisions publiques et moyennes de retours terminaux."""
 
 from collections import Counter
 
@@ -9,7 +9,7 @@ def etat(observation):
     return observation['player_total'], valeur
 
 
-def choisir(observation, politique, rng):
+def choisir(observation, politique, rng, bilans=None, epsilon=0):
     if observation['session_status'] != 'active' or observation['hand_status'] != 'decision':
         raise ValueError('Aucune décision permise.')
     actions = observation['legal_actions']
@@ -22,6 +22,17 @@ def choisir(observation, politique, rng):
         return action
     if politique == 'aleatoire':
         return rng.choice(actions)
+    if politique == 'apprise':
+        if bilans is None:
+            raise ValueError('La politique apprise nécessite une table de bilans.')
+        if not 0 <= epsilon <= 1:
+            raise ValueError('Epsilon doit être compris entre 0 et 1.')
+        if epsilon and rng.random() < epsilon:
+            return rng.choice(actions)
+        situation = etat(observation)
+        valeurs = {action: bilans.consulter(situation, action)['Q'] for action in actions}
+        maximum = max(valeurs.values())
+        return rng.choice([action for action in actions if valeurs[action] == maximum])
     raise ValueError('Politique inconnue.')
 
 
