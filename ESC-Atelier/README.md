@@ -39,6 +39,14 @@ Si cette main est un naturel, elle ne produit aucune décision : conserver sa tr
 py -3.13 lancer.py --politique aleatoire --apprendre --table preuves/table-mon-binome.json --max-hands 5 --max-seconds 60 --idle-seconds 30 --retention-seconds 60
 ```
 
+Puis jouer cinq mains en utilisant les informations récoltées, sans modifier la table :
+
+```powershell
+py -3.13 lancer.py --politique apprise --table preuves/table-mon-binome.json --max-hands 5 --max-seconds 60 --idle-seconds 30 --retention-seconds 60
+```
+
+La première commande choisit les actions au hasard et apprend des résultats; la seconde exploite les estimations de la même table, avec départage aléatoire des égalités. Une limite de temps peut interrompre une séance avant cinq mains.
+
 Sous Linux/macOS : remplacer `py -3.13` par le chemin de CPython 3.13, généralement `python3.13`.
 
 ## Politique apprise
