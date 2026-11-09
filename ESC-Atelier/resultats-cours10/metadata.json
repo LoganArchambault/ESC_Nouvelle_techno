@@ -1,0 +1,27 @@
+{
+  "version": "esc-cours10-v1",
+  "python": "3.13.15 (tags/v3.13.15:4061bc4, Aug  5 2026, 13:05:39) [MSC v.1944 64 bit (AMD64)]",
+  "date_utc": "2026-11-09T21:15:27.653425+00:00",
+  "attribution": "récompense terminale à chaque visite",
+  "sha256_sources": {
+    "atelier\\__init__.py": "26e7046ba908330a64b1cad7c5473168884e56be6292d7cf173e4bf9e54b0b00",
+    "atelier\\joueur.py": "a86d73c28b810347587b8f3db91b06ddcf65b9de4796c95e832bf4b7a9d85d52",
+    "experience_esc.py": "5ab76f07eb3f25e673a3d42ddb8994b76042c1517bf5823eea7495817626868f",
+    "graphique_esc.py": "09859f5579caa679fb9cfb5f01bdcbffdf660e48720915f988964323beee8eab",
+    "lancer.py": "3179837bb6ebdcb9dca06141ad9e79990ca988ab5310045ae60c9a613e1d3000",
+    "materiel-officiel\\jeu-fourni\\examples\\cycle_commandes.py": "373b9e6e01465eaf9b8a4e46047d25958022250b43b22d85dfbc0bd26480ea11",
+    "materiel-officiel\\jeu-fourni\\src\\blackjack\\__init__.py": "ce8c058bc1501c0d0cb5c65111a8109529b13f97fcafaff5d416f25667af9d6b",
+    "materiel-officiel\\jeu-fourni\\src\\blackjack\\client_https.py": "bf83f3c132f6ef5715327e5bd7c282083ef3659ee9b0003320beb7fb4343c35d",
+    "materiel-officiel\\jeu-fourni\\src\\blackjack\\engine.py": "e6a23114e8ea29c7700365e15280b0c1718572f684188658fa6c1b0543956992",
+    "materiel-officiel\\jeu-fourni\\src\\blackjack\\errors.py": "697a4dc529bac8cd6795a8ffe58b652ae46325366ed728d5a918b097a6dfc0d0",
+    "materiel-officiel\\jeu-fourni\\src\\blackjack\\local.py": "b6c3fe3e2a042388e6eb63d29aa33ceacc25f9dbd7741530cba28fffe889b3a1",
+    "materiel-officiel\\jeu-fourni\\src\\blackjack\\memory.py": "1464ef538ae15d2da23844468cf8dc95d51d0a95d6a6f3186c061592a0d8c4f3",
+    "materiel-officiel\\jeu-fourni\\src\\blackjack\\model.py": "841164bd60c02d281a2f2dd8b189bd5d15a1990265b2b6094da696ab92cc48f9",
+    "materiel-officiel\\jeu-fourni\\src\\blackjack\\projection.py": "c166b98edf150e4fc9e626a9da8949f9410d53a679210fcba6f3b8a23edd9748",
+    "materiel-officiel\\jeu-fourni\\src\\blackjack\\sessions.py": "d96ef5e4ca67b33e3d6012828262861a769391b57b8c5f1e9178186ab52858f2",
+    "materiel-officiel\\jeu-fourni\\src\\blackjack\\validation.py": "f3fa111d40e49ce22657edce5a93bce31fbcb7fb6bce05f65ebeab82b37223aa",
+    "materiel-officiel\\jeu-fourni\\tests\\support.py": "f38c58341a137e764c4fce7cde109cfb99ed08e3b7c719744258d56de089bc2c",
+    "materiel-officiel\\jeu-fourni\\tests\\test_engine.py": "d6f9df0521d7e47b2b44e6e6a6a200012652d7187d3a61e20340fc1d5e7787de",
+    "tests\\test_atelier.py": "e36db7d63ba1f0c5810c82f5c6b904bfc6695e4e577da9b2fb8180afd23dc430"
+  }
+}

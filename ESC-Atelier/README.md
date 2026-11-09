@@ -1,6 +1,36 @@
+# ESC — Projet et preuves A1/A2
+
+## Cours 10 — jalon A1/A2 (9 novembre 2026)
+
+Version déposée : esc-cours10-v1. Nom et groupe : **Logan Archambault Vallée — groupe 00002**.
+Les ajouts et les exécutions de cette section ont été réalisés par l’assistant IA.
+
+- Résultats : [CSV réel](resultats-cours10/mes-resultats.csv), [graphique](resultats-cours10/comparaison-A1-A2.png).
+- Configurations, modèles et tables aux six points : `resultats-cours10/A1/` et `resultats-cours10/A2/`.
+- Journal : entrée du 9 novembre dans [JOURNAL-A-INTEGRER.md](JOURNAL-A-INTEGRER.md).
+- Traces complètes compressées : `trace.jsonl.gz` dans chaque dossier A1/A2; ouvrables avec le module Python `gzip`.
+
+En PowerShell, dans ce dossier :
+
+```powershell
+$python313 = 'C:\Users\6311993\AppData\Local\Programs\Python\Python313\python.exe'
+& $python313 -m unittest discover -s tests -v
+& $python313 experience_esc.py resultats-nouvel-essai
+py -3.14 graphique_esc.py resultats-nouvel-essai
+```
+
+Le lanceur `py -3.13` ne détecte pas cette installation sur ce poste : utiliser le chemin ci-dessus.
+L’entraînement et les 46 tests ont été exécutés sous CPython 3.13.15. Le graphique a été généré sous CPython 3.14 avec Matplotlib 3.11.1, car Matplotlib manque dans l’installation 3.13. Le moteur ne dépend pas de Matplotlib.
+Chaque nouvelle campagne exige un dossier de sortie inexistant, afin de préserver les résultats précédents. La campagne commence avec deux tables vides et ne reprend pas les anciens modèles.
+Le CSV de démonstration officiel n’a pas été fourni : vérifier les noms des colonnes avec `38-Graphique-ESC` si sa compatibilité exacte est demandée. Le script joint lit directement notre CSV.
+
+Dépôt individuel : ZIP avant le cours du **16 novembre 2026 à 14 h (100692)** ou du **19 novembre 2026 à 12 h (100444)**. Compléter l’identité et relire le journal avant le dépôt. Aucun rapport séparé; aucun système B inclus. Le portfolio reste un travail personnel distinct.
+
+---
+
 # Atelier — Fixed-17 et politique apprise
 
-Version : atelier08-v1. Auteur du code ajouté : assistant IA, à vérifier et à expliquer par les membres du binôme. Noms des membres : à compléter.
+Version : atelier08-v1. Auteur du code ajouté : assistant IA, à vérifier et à expliquer par les membres du binôme. Membres du projet : Logan Archambault Vallée et Samuel Cuerrier.
 
 Ce dossier contient le matériel officiel v1.1 intact dans `materiel-officiel/`, et une proposition d'implémentation de l'atelier. Aucun projet existant du binôme n'a été fourni : les ajouts restent à intégrer au besoin. Ce n'est pas le projet final A1/A2/B1/B2.
 

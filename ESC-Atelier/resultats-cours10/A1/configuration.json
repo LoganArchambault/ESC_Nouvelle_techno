@@ -1,0 +1,29 @@
+{
+  "configuration": "A1",
+  "epsilon": 0.25,
+  "recompenses": {
+    "win": 1,
+    "tie": 0,
+    "loss": -1
+  },
+  "limites": {
+    "max_hands": 100,
+    "max_seconds": 60,
+    "idle_seconds": 30,
+    "retention_seconds": 60
+  },
+  "budget": 10000,
+  "points": [
+    0,
+    2000,
+    4000,
+    6000,
+    8000,
+    10000
+  ],
+  "mains_par_mesure": 500,
+  "epsilon_mesure": 0,
+  "apprentissage_mesure": false,
+  "graine_base": 20261109,
+  "intention": "Référence du dernier cours."
+}

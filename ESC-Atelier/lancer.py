@@ -23,7 +23,7 @@ def sauver(path, document):
     temporaire.replace(path)
 
 
-def executer(client, politique, rng, bilans, recompenses, apprendre, trace):
+def executer(client, politique, rng, bilans, recompenses, apprendre, trace, epsilon=0.25):
     def appel(operation, **arguments):
         if operation != 'observe':
             arguments['request_id'] = uuid4().hex
@@ -63,7 +63,7 @@ def executer(client, politique, rng, bilans, recompenses, apprendre, trace):
                                 expected_revision=observation['revision'])
         elif observation['hand_status'] == 'decision':
             action = choisir(observation, politique, rng, bilans,
-                             epsilon=0.25 if apprendre else 0)
+                             epsilon=epsilon if apprendre else 0)
             avant = observation
             observation = appel('act', session_id=avant['session_id'], action=action,
                                 expected_revision=avant['revision'])
