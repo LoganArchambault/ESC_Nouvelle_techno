@@ -26,3 +26,13 @@ Même moteur officiel esc-blackjack-a26-v1 et mêmes bornes : au plus 100 mains 
 **Constat et décision :** A1 obtient successivement 31,6; 40,6; 45,6; 42,8; 41,0; 42,8 %; A2 obtient 31,6; 38,8; 40,2; 42,8; 41,0; 41,2 %. Au point final : A1 = 214/500, A2 = 206/500, écart A2 − A1 = −1,6 point de pourcentage. Les courbes ne sont pas monotones; A2 rejoint A1 aux points 6 000 et 8 000 puis finit en dessous. Décision provisoire : conserver A1 comme référence et retester A2 avec plusieurs graines; cet essai ne justifie pas de remplacer A1 ni d’affirmer qu’A2 est systématiquement inférieur. Les résultats défavorables sont conservés. Les courbes montrent des évaluations successives, pas un cumul des victoires d’entraînement.
 
 **État du jalon :** A1/A2, CSV et graphique terminés. Restent la relecture personnelle du code et des preuves et la vérification du format avec le CSV officiel non disponible ici. Question proposée pour la rétroaction : notre protocole de graines et nos bornes permettent-ils une comparaison adéquate avant les répétitions finales? Prochaine vérification : expliquer une décision du joueur, recalculer une ligne de taux et réaliser des répétitions indépendantes. Le système B et la campagne finale restent à réaliser ultérieurement.
+
+## 23 novembre 2026 — Faire fonctionner B1
+
+**Travail effectué par l’assistant IA, à relire personnellement.** B1 distingue désormais les mains ayant le même total et la même carte visible du croupier selon qu’un as compte pour 11, tant pour choisir une action que pour apprendre.
+
+**Essai local :** CPython 3.13.5, politique apprise avec exploration epsilon 0,25, table B1 initialement vide, récompenses +1/0/−1; 30 mains réglées dans une séance. [Trace complète](preuves/20261123T201335-bbe454d5/trace.jsonl), [conditions](preuves/20261123T201335-bbe454d5/metadata.json) et [table obtenue](preuves/table-b1-j2.json).
+
+**Extrait réel :** main `1f0708cd99c342b28b40656396f4e0fe`, joueur as et 2 (total 13, as utilisable), croupier 3. B1 enregistre `(13, 3, true)` et choisit `hold`; après la victoire, le bilan de cette action passe de `N=0, S=0, Q=0` à `N=1, S=1, Q=1`. A1 aurait représenté cette situation par `(13, 3)` seulement. Le choix de cette main ne démontre pas à lui seul que B1 aurait choisi autrement : la table était vide et les égalités sont départagées au hasard.
+
+**Limite :** cet essai vérifie l’utilisation de la nouvelle information, pas une amélioration des performances. Une comparaison officielle A1/B1 reste à faire selon le protocole ESC; B2 reste à réaliser.

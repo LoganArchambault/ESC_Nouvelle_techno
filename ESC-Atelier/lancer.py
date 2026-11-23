@@ -23,7 +23,8 @@ def sauver(path, document):
     temporaire.replace(path)
 
 
-def executer(client, politique, rng, bilans, recompenses, apprendre, trace, epsilon=0.25):
+def executer(client, politique, rng, bilans, recompenses, apprendre, trace, epsilon=0.25,
+             representation='a1'):
     def appel(operation, **arguments):
         if operation != 'observe':
             arguments['request_id'] = uuid4().hex
@@ -63,12 +64,12 @@ def executer(client, politique, rng, bilans, recompenses, apprendre, trace, epsi
                                 expected_revision=observation['revision'])
         elif observation['hand_status'] == 'decision':
             action = choisir(observation, politique, rng, bilans,
-                             epsilon=epsilon if apprendre else 0)
+                             epsilon=epsilon if apprendre else 0, representation=representation)
             avant = observation
             observation = appel('act', session_id=avant['session_id'], action=action,
                                 expected_revision=avant['revision'])
             acceptee = action_acceptee(avant, observation, action)
-            visite = {'etat': etat(avant), 'action': action,
+            visite = {'etat': etat(avant, representation), 'action': action,
                       'revision_avant': avant['revision'], 'revision_apres': observation['revision']}
             trace({'type': 'choix', **visite, 'accepte': acceptee})
             if acceptee:
@@ -80,6 +81,8 @@ def executer(client, politique, rng, bilans, recompenses, apprendre, trace, epsi
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--politique', required=True, choices=['fixed17', 'aleatoire', 'apprise'])
+    parser.add_argument('--representation', choices=['a1', 'b1'], default='a1',
+                        help="État A1 ou B1 (ajoute l'as utilisable).")
     parser.add_argument('--max-hands', type=int, required=True)
     parser.add_argument('--max-seconds', type=float, required=True)
     parser.add_argument('--idle-seconds', type=float, required=True)
@@ -112,6 +115,8 @@ def main():
     document = json.loads(args.table.read_text(encoding='utf-8')) if args.table and args.table.exists() else {}
     if document and document.get('recompenses') != recompenses:
         parser.error('Récompenses différentes de la table existante : utilisez un autre fichier.')
+    if document and document.get('representation', 'a1') != args.representation:
+        parser.error('Représentation différente de la table existante : utilisez un autre fichier.')
     bilans = Bilans(document)
     args.sortie.mkdir(parents=True, exist_ok=True)
     nom = datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%S') + '-' + uuid4().hex[:8]
@@ -123,7 +128,8 @@ def main():
                 'commande_argv': [sys.executable, *sys.argv], 'repertoire': str(Path.cwd()),
                 'python': sys.version, 'implementation': platform.python_implementation(),
                 'cible_cpython313_validee': cible, 'sha256_sources': empreintes,
-                'politique': args.politique, 'apprentissage': args.apprendre,
+                'politique': args.politique, 'representation': args.representation,
+                'apprentissage': args.apprendre,
                 'epsilon': (0.25 if args.apprendre else 0) if args.politique == 'apprise' else None,
                 'limites': asdict(limites), 'recompenses_proposees': recompenses,
                 'bilans_avant': bilans.exporter()}
@@ -136,10 +142,12 @@ def main():
             for _ in range(args.seances):
                 # Aucun accès privé; hasard moteur et hasard des choix indépendants.
                 resumes, fin = executer(LocalClient(limites), args.politique, Random(), bilans,
-                                        recompenses, args.apprendre, trace)
+                                        recompenses, args.apprendre, trace,
+                                        representation=args.representation)
                 if args.apprendre:
                     args.table.parent.mkdir(parents=True, exist_ok=True)
-                    sauver(args.table, dict(bilans.exporter(), recompenses=recompenses))
+                    sauver(args.table, dict(bilans.exporter(), recompenses=recompenses,
+                                           representation=args.representation))
                 print(f"{fin['session_id']} : {len(resumes)} main(s) réglée(s), "
                       f"{fin['session_status']}/{fin['end_reason']}")
                 for r in resumes:

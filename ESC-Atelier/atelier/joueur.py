@@ -3,13 +3,18 @@
 from collections import Counter
 
 
-def etat(observation):
+def etat(observation, representation='a1'):
     rang = observation['dealer_upcard']['rank']
     valeur = 11 if rang == 'A' else 10 if rang in ('J', 'Q', 'K') else int(rang)
-    return observation['player_total'], valeur
+    situation = observation['player_total'], valeur
+    if representation == 'b1':
+        return situation + (observation['player_usable_ace'],)
+    if representation != 'a1':
+        raise ValueError('Représentation inconnue.')
+    return situation
 
 
-def choisir(observation, politique, rng, bilans=None, epsilon=0):
+def choisir(observation, politique, rng, bilans=None, epsilon=0, representation='a1'):
     if observation['session_status'] != 'active' or observation['hand_status'] != 'decision':
         raise ValueError('Aucune décision permise.')
     actions = observation['legal_actions']
@@ -29,7 +34,7 @@ def choisir(observation, politique, rng, bilans=None, epsilon=0):
             raise ValueError('Epsilon doit être compris entre 0 et 1.')
         if epsilon and rng.random() < epsilon:
             return rng.choice(actions)
-        situation = etat(observation)
+        situation = etat(observation, representation)
         valeurs = {action: bilans.consulter(situation, action)['Q'] for action in actions}
         maximum = max(valeurs.values())
         return rng.choice([action for action in actions if valeurs[action] == maximum])

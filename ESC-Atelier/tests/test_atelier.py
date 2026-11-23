@@ -1,7 +1,12 @@
 """Vérifications de notre joueur; aucun accès à l'état privé du moteur."""
 
 from copy import deepcopy
+import json
+from pathlib import Path
 from random import Random
+import subprocess
+import sys
+from tempfile import TemporaryDirectory
 import unittest
 
 from lancer import Limits, LocalClient, executer
@@ -25,6 +30,21 @@ class PolitiqueTests(unittest.TestCase):
     def test_cartes_visibles(self):
         for rang, valeur in [('A', 11), ('K', 10), ('Q', 10), ('J', 10), ('7', 7)]:
             self.assertEqual(etat(observation(16, rang)), (16, valeur))
+
+    def test_b1_distingue_as_utilisable_et_choisit_selon_la_table(self):
+        souple = observation(16, '10')
+        souple.update(player_cards=[{'rank': 'A'}, {'rank': '5'}], player_usable_ace=True)
+        dure = observation(16, '10')
+        dure.update(player_cards=[{'rank': '10'}, {'rank': '6'}], player_usable_ace=False)
+        self.assertEqual(etat(souple), etat(dure))
+        self.assertEqual(etat(souple, 'b1'), (16, 10, True))
+        self.assertEqual(etat(dure, 'b1'), (16, 10, False))
+        b = Bilans({'bilans': [
+            {'etat': [16, 10, True], 'action': 'hit', 'N': 1, 'S': 1},
+            {'etat': [16, 10, False], 'action': 'hold', 'N': 1, 'S': 1},
+        ]})
+        self.assertEqual(choisir(souple, 'apprise', Random(0), b, representation='b1'), 'hit')
+        self.assertEqual(choisir(dure, 'apprise', Random(0), b, representation='b1'), 'hold')
 
     def test_arret_et_action_illegale(self):
         for changement in [dict(session_status='truncated'), dict(hand_status='hand_over'),
@@ -123,6 +143,38 @@ class BilansTests(unittest.TestCase):
 
 
 class CycleTests(unittest.TestCase):
+    def test_b1_trajectoire_et_apprentissage_utilisent_le_meme_etat(self):
+        traces = []
+        b = Bilans()
+        mains, _ = executer(LocalClient(Limits(5, 60, 30, 60), seed=8),
+                            'apprise', Random(10), b, {'win': 1, 'tie': 0, 'loss': -1},
+                            True, traces.append, representation='b1')
+        visites = [v for m in mains for v in m['trajectoire']]
+        self.assertTrue(visites)
+        self.assertTrue(all(len(v['etat']) == 3 and type(v['etat'][2]) is bool for v in visites))
+        self.assertEqual(sum(ligne['N'] for ligne in b.exporter()['bilans']), len(visites))
+        self.assertEqual({tuple(ligne['etat']) for ligne in b.exporter()['bilans']},
+                         {tuple(v['etat']) for v in visites})
+
+    def test_tables_a1_et_b1_ne_peuvent_pas_etre_melangees(self):
+        with TemporaryDirectory() as dossier:
+            table = Path(dossier) / 'table.json'
+            commande = [sys.executable, 'lancer.py', '--politique', 'apprise', '--apprendre',
+                        '--table', str(table), '--max-hands', '1', '--max-seconds', '60',
+                        '--idle-seconds', '30', '--retention-seconds', '60']
+            if sys.version_info[:2] != (3, 13):
+                commande.append('--autoriser-version-hors-cible')
+            for document, representation in [
+                ({'bilans': [], 'recompenses': {'win': 1, 'tie': 0, 'loss': -1}}, 'b1'),
+                ({'bilans': [], 'recompenses': {'win': 1, 'tie': 0, 'loss': -1},
+                  'representation': 'b1'}, 'a1'),
+            ]:
+                table.write_text(json.dumps(document), encoding='utf-8')
+                resultat = subprocess.run(commande + ['--representation', representation],
+                                          capture_output=True, text=True)
+                self.assertNotEqual(resultat.returncode, 0)
+                self.assertIn('Représentation différente', resultat.stderr)
+
     def test_mesure_utilise_table_sans_la_modifier(self):
         b = Bilans({'bilans': [
             {'etat': [16, 10], 'action': 'hit', 'N': 2, 'S': -1},

@@ -1,0 +1,489 @@
+{
+  "bilans": [
+    {
+      "etat": [
+        5,
+        10,
+        false
+      ],
+      "action": "hit",
+      "N": 1,
+      "S": -1,
+      "Q": -1.0
+    },
+    {
+      "etat": [
+        6,
+        9,
+        false
+      ],
+      "action": "hold",
+      "N": 1,
+      "S": -1,
+      "Q": -1.0
+    },
+    {
+      "etat": [
+        6,
+        10,
+        false
+      ],
+      "action": "hold",
+      "N": 1,
+      "S": -1,
+      "Q": -1.0
+    },
+    {
+      "etat": [
+        8,
+        4,
+        false
+      ],
+      "action": "hit",
+      "N": 1,
+      "S": 1,
+      "Q": 1.0
+    },
+    {
+      "etat": [
+        9,
+        4,
+        false
+      ],
+      "action": "hold",
+      "N": 2,
+      "S": 2,
+      "Q": 1.0
+    },
+    {
+      "etat": [
+        10,
+        5,
+        false
+      ],
+      "action": "hold",
+      "N": 1,
+      "S": -1,
+      "Q": -1.0
+    },
+    {
+      "etat": [
+        10,
+        10,
+        false
+      ],
+      "action": "hit",
+      "N": 1,
+      "S": -1,
+      "Q": -1.0
+    },
+    {
+      "etat": [
+        11,
+        10,
+        false
+      ],
+      "action": "hit",
+      "N": 1,
+      "S": 1,
+      "Q": 1.0
+    },
+    {
+      "etat": [
+        12,
+        4,
+        false
+      ],
+      "action": "hold",
+      "N": 1,
+      "S": 1,
+      "Q": 1.0
+    },
+    {
+      "etat": [
+        12,
+        6,
+        false
+      ],
+      "action": "hold",
+      "N": 1,
+      "S": 1,
+      "Q": 1.0
+    },
+    {
+      "etat": [
+        12,
+        10,
+        true
+      ],
+      "action": "hold",
+      "N": 1,
+      "S": 1,
+      "Q": 1.0
+    },
+    {
+      "etat": [
+        13,
+        3,
+        true
+      ],
+      "action": "hold",
+      "N": 1,
+      "S": 1,
+      "Q": 1.0
+    },
+    {
+      "etat": [
+        13,
+        4,
+        true
+      ],
+      "action": "hold",
+      "N": 1,
+      "S": -1,
+      "Q": -1.0
+    },
+    {
+      "etat": [
+        13,
+        7,
+        false
+      ],
+      "action": "hit",
+      "N": 1,
+      "S": -1,
+      "Q": -1.0
+    },
+    {
+      "etat": [
+        13,
+        10,
+        false
+      ],
+      "action": "hit",
+      "N": 2,
+      "S": 0,
+      "Q": 0.0
+    },
+    {
+      "etat": [
+        13,
+        10,
+        false
+      ],
+      "action": "hold",
+      "N": 1,
+      "S": 1,
+      "Q": 1.0
+    },
+    {
+      "etat": [
+        14,
+        7,
+        false
+      ],
+      "action": "hit",
+      "N": 1,
+      "S": -1,
+      "Q": -1.0
+    },
+    {
+      "etat": [
+        14,
+        9,
+        false
+      ],
+      "action": "hold",
+      "N": 1,
+      "S": 1,
+      "Q": 1.0
+    },
+    {
+      "etat": [
+        15,
+        4,
+        false
+      ],
+      "action": "hold",
+      "N": 1,
+      "S": 1,
+      "Q": 1.0
+    },
+    {
+      "etat": [
+        15,
+        7,
+        false
+      ],
+      "action": "hit",
+      "N": 1,
+      "S": -1,
+      "Q": -1.0
+    },
+    {
+      "etat": [
+        15,
+        9,
+        false
+      ],
+      "action": "hit",
+      "N": 1,
+      "S": -1,
+      "Q": -1.0
+    },
+    {
+      "etat": [
+        15,
+        10,
+        false
+      ],
+      "action": "hit",
+      "N": 1,
+      "S": -1,
+      "Q": -1.0
+    },
+    {
+      "etat": [
+        16,
+        3,
+        false
+      ],
+      "action": "hit",
+      "N": 1,
+      "S": -1,
+      "Q": -1.0
+    },
+    {
+      "etat": [
+        16,
+        10,
+        false
+      ],
+      "action": "hold",
+      "N": 1,
+      "S": -1,
+      "Q": -1.0
+    },
+    {
+      "etat": [
+        17,
+        10,
+        false
+      ],
+      "action": "hit",
+      "N": 1,
+      "S": -1,
+      "Q": -1.0
+    },
+    {
+      "etat": [
+        17,
+        10,
+        false
+      ],
+      "action": "hold",
+      "N": 1,
+      "S": -1,
+      "Q": -1.0
+    },
+    {
+      "etat": [
+        18,
+        2,
+        false
+      ],
+      "action": "hit",
+      "N": 1,
+      "S": -1,
+      "Q": -1.0
+    },
+    {
+      "etat": [
+        18,
+        10,
+        false
+      ],
+      "action": "hit",
+      "N": 1,
+      "S": -1,
+      "Q": -1.0
+    },
+    {
+      "etat": [
+        19,
+        4,
+        true
+      ],
+      "action": "hold",
+      "N": 1,
+      "S": 1,
+      "Q": 1.0
+    },
+    {
+      "etat": [
+        19,
+        10,
+        false
+      ],
+      "action": "hold",
+      "N": 1,
+      "S": 1,
+      "Q": 1.0
+    },
+    {
+      "etat": [
+        20,
+        5,
+        false
+      ],
+      "action": "hit",
+      "N": 1,
+      "S": 1,
+      "Q": 1.0
+    },
+    {
+      "etat": [
+        20,
+        9,
+        false
+      ],
+      "action": "hold",
+      "N": 1,
+      "S": 1,
+      "Q": 1.0
+    },
+    {
+      "etat": [
+        20,
+        10,
+        true
+      ],
+      "action": "hold",
+      "N": 1,
+      "S": 1,
+      "Q": 1.0
+    }
+  ],
+  "mains_attribuees": [
+    [
+      "ac50af389b164922b0ae0bb02f6b694e",
+      "05db78ec289d484e89d0cf8ddb153600"
+    ],
+    [
+      "ac50af389b164922b0ae0bb02f6b694e",
+      "08ad8bb73af0413da8585ba427a20602"
+    ],
+    [
+      "ac50af389b164922b0ae0bb02f6b694e",
+      "09509d5666de476691bf91aa43667b7f"
+    ],
+    [
+      "ac50af389b164922b0ae0bb02f6b694e",
+      "1de061655f12440898bf35abf6906955"
+    ],
+    [
+      "ac50af389b164922b0ae0bb02f6b694e",
+      "1f0708cd99c342b28b40656396f4e0fe"
+    ],
+    [
+      "ac50af389b164922b0ae0bb02f6b694e",
+      "22d73b77d1b34e81a87c90aa7d2fd4de"
+    ],
+    [
+      "ac50af389b164922b0ae0bb02f6b694e",
+      "429bbce442624d58a4ee04d2d6db456f"
+    ],
+    [
+      "ac50af389b164922b0ae0bb02f6b694e",
+      "4c13fc78db5644fca602a80267242448"
+    ],
+    [
+      "ac50af389b164922b0ae0bb02f6b694e",
+      "4faaadbe87cd42a6b87857dba8e1f845"
+    ],
+    [
+      "ac50af389b164922b0ae0bb02f6b694e",
+      "4ff3c89a179c45f29403b00d67e8ab7f"
+    ],
+    [
+      "ac50af389b164922b0ae0bb02f6b694e",
+      "5114712044004ac2a2cd8fa55204162f"
+    ],
+    [
+      "ac50af389b164922b0ae0bb02f6b694e",
+      "5a1d61fd31eb46bba0cde365b1de4718"
+    ],
+    [
+      "ac50af389b164922b0ae0bb02f6b694e",
+      "6988b9f4375c49399f9ae94973378e7d"
+    ],
+    [
+      "ac50af389b164922b0ae0bb02f6b694e",
+      "7d7c5c3ab79949a1ad97da595ea1ff3e"
+    ],
+    [
+      "ac50af389b164922b0ae0bb02f6b694e",
+      "830a67772054434d8156c60aa149d204"
+    ],
+    [
+      "ac50af389b164922b0ae0bb02f6b694e",
+      "8927e160d87b48c1bbf273f0028119cc"
+    ],
+    [
+      "ac50af389b164922b0ae0bb02f6b694e",
+      "949cdaff567f4dfdbbfb6d5390aec529"
+    ],
+    [
+      "ac50af389b164922b0ae0bb02f6b694e",
+      "b2871a7ee8804416a84e41dccae41d84"
+    ],
+    [
+      "ac50af389b164922b0ae0bb02f6b694e",
+      "c0bb50152e524fd2985363fed3410ec9"
+    ],
+    [
+      "ac50af389b164922b0ae0bb02f6b694e",
+      "c60884ea7d5c4c258b986469fe894df2"
+    ],
+    [
+      "ac50af389b164922b0ae0bb02f6b694e",
+      "c64a994ba0ee4dac82ee6bc434fa1337"
+    ],
+    [
+      "ac50af389b164922b0ae0bb02f6b694e",
+      "d138305ed0644fbdb4013040dc4dd8aa"
+    ],
+    [
+      "ac50af389b164922b0ae0bb02f6b694e",
+      "d43ed82484c84d389d07415e528c5ce3"
+    ],
+    [
+      "ac50af389b164922b0ae0bb02f6b694e",
+      "d8ec0f9083984b648480478dd47c1083"
+    ],
+    [
+      "ac50af389b164922b0ae0bb02f6b694e",
+      "dc2480b54b56404f9a46da6bb574dd99"
+    ],
+    [
+      "ac50af389b164922b0ae0bb02f6b694e",
+      "e8ca4da954894a2bbba7d9b5e7c82beb"
+    ],
+    [
+      "ac50af389b164922b0ae0bb02f6b694e",
+      "ea2893462612499f88e88994ed4afcc0"
+    ],
+    [
+      "ac50af389b164922b0ae0bb02f6b694e",
+      "f98672f966ee4c76a87144aca2226d70"
+    ],
+    [
+      "ac50af389b164922b0ae0bb02f6b694e",
+      "fd2fe7ca7770459db993f1df099b44bf"
+    ],
+    [
+      "ac50af389b164922b0ae0bb02f6b694e",
+      "fe3ed6e2a97e4d5398388438b4fd38b5"
+    ]
+  ]
+}

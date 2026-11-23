@@ -1,5 +1,17 @@
 # ESC — Projet et preuves A1/A2
 
+## Cours 12 — essai B1
+
+B1 ajoute l'as utilisable à l'état : `(total joueur, carte visible du croupier, as utilisable)`. A1 reste le comportement par défaut. Les tables A1 et B1 sont incompatibles : utiliser un fichier distinct. L'essai et une main détaillée sont consignés dans [le journal](JOURNAL-A-INTEGRER.md#23-novembre-2026--faire-fonctionner-b1).
+
+Pour commencer une nouvelle table B1 et entraîner brièvement :
+
+```powershell
+py -3.13 lancer.py --politique apprise --representation b1 --apprendre --table preuves/table-b1-nouvelle.json --max-hands 30 --max-seconds 60 --idle-seconds 30 --retention-seconds 60
+```
+
+Sans `--apprendre`, la politique utilise la table sans la modifier. Ce court essai ne constitue pas une comparaison officielle A1/B1.
+
 ## Cours 10 — jalon A1/A2 (9 novembre 2026)
 
 Version déposée : esc-cours10-v1. Nom et groupe : **Logan Archambault Vallée — groupe 00002**.
@@ -126,7 +138,7 @@ Les mains et événements affichés ne sont pas rejouables dans un nouveau proce
 
 ## Limites à expliquer
 
-L'état `(total, carte visible)` regroupe les as utilisables et non utilisables. La politique utilise seulement le total fourni; aucune carte cachée, graine ou donnée privée ne participe au choix. Les tests déterministes du cycle utilisent des graines locales de test, jamais des entrées de la politique. Les preuves d'atelier sont produites sans graine imposée.
+L'état A1 `(total, carte visible)` regroupe les as utilisables et non utilisables; B1 les distingue. Les deux utilisent les informations publiques du moteur; aucune carte cachée, graine ou donnée privée ne participe au choix. Les tests déterministes du cycle utilisent des graines locales de test, jamais des entrées de la politique. Les preuves d'atelier sont produites sans graine imposée.
 
 Fixed-17 n'apprend pas. La collecte aléatoire alimente une table mais ne choisit jamais selon Q; la politique apprise l'utilise pour ses décisions. Aucun score minimal, campagne finale ou couverture exhaustive n'est revendiqué.
 
